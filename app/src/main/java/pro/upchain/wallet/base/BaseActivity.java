@@ -17,6 +17,7 @@ package pro.upchain.wallet.base;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -39,6 +40,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
+    @Nullable
     @BindView(R.id.common_toolbar)
     public Toolbar mCommonToolbar;
 
@@ -50,9 +52,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
+        unbinder = ButterKnife.bind(this);
         mContext = this;
         ImmersionBar.with(this).init();
-        unbinder = ButterKnife.bind(this);
 
         if (mCommonToolbar != null) {
             ImmersionBar.with(this)

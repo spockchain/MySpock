@@ -36,31 +36,10 @@ public class EthereumNetworkRepository  {
     public static EthereumNetworkRepository sSelf;
 
     private final NetworkInfo[] NETWORKS = new NetworkInfo[] {
-            new NetworkInfo(ETHEREUM_MAIN_NETWORK_NAME, ETH_SYMBOL,
-                    "https://mainnet.infura.io/llyrtzQ3YhkdESt2Fzrk",
-                    "https://api.trustwalletapp.com/",
-                    "https://etherscan.io/",1, true),
-            new NetworkInfo(CLASSIC_NETWORK_NAME, ETC_SYMBOL,
-                    "https://mewapi.epool.io/",
-                    "https://classic.trustwalletapp.com",
-                    "https://gastracker.io",61, true),
-            new NetworkInfo(POA_NETWORK_NAME, POA_SYMBOL,
-                    "https://core.poa.network",
-                    "https://poa.trustwalletapp.com","poa", 99, false),
-            new NetworkInfo(KOVAN_NETWORK_NAME, ETH_SYMBOL,
-                    "https://kovan.infura.io/llyrtzQ3YhkdESt2Fzrk",
-                    "http://192.168.8.103:8001/",
-                    "https://kovan.etherscan.io", 42, false),
-
-            new NetworkInfo(ROPSTEN_NETWORK_NAME, ETH_SYMBOL,
-                    "https://ropsten.infura.io/llyrtzQ3YhkdESt2Fzrk",
-                    "http://192.168.8.103:8000/",
-                    "https://ropsten.etherscan.io",3, false),
-
-            new NetworkInfo(LOCAL_DEV_NETWORK_NAME, ETH_SYMBOL,
-                    "http://192.168.8.100:8545",
-                    "http://192.168.8.100:8000/",
-                    "",1337, false),
+            new NetworkInfo("TestNet", "SPOCK",
+                    "http://47.110.131.233:9666",
+                    "http://47.110.131.233:9666",
+                    null,123123124, false),
     };
 
     private final SharedPreferenceRepository preferences;
