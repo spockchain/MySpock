@@ -238,13 +238,11 @@ public class ETHWalletUtils {
 
 
     public static boolean isTooSimplePrivateKey(String privateKey) {
-
         if (Numeric.toBigInt(privateKey).intValue() < 100000000) {
             return true;
         } else {
-            return true;
+            return false;
         }
-
     }
 
     private static boolean createParentDir(File file) {

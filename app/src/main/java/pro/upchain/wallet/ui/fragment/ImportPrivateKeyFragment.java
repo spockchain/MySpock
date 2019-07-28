@@ -102,12 +102,15 @@ public class ImportPrivateKeyFragment extends BaseFragment {
     }
 
     private boolean verifyInfo(String privateKey, String walletPwd, String confirmPwd, String pwdReminder) {
-        if (TextUtils.isEmpty(privateKey) || ETHWalletUtils.isTooSimplePrivateKey(walletPwd)) {
+        if (TextUtils.isEmpty(privateKey)) {
             ToastUtils.showToast(R.string.load_wallet_by_private_key_input_tip);
             return false;
         } else if (TextUtils.isEmpty(walletPwd)) {
             ToastUtils.showToast(R.string.create_wallet_pwd_input_tips);
             // 同时判断强弱
+            return false;
+        } else if (ETHWalletUtils.isTooSimplePrivateKey(walletPwd)) {
+            ToastUtils.showToast(R.string.load_wallet_by_private_key_wallet_pwd_too_short);
             return false;
         } else if (TextUtils.isEmpty(confirmPwd) || !TextUtils.equals(confirmPwd, walletPwd)) {
             ToastUtils.showToast(R.string.create_wallet_pwd_confirm_input_tips);
