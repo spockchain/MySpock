@@ -17,7 +17,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/wallet_logo_demo" />
+            android:src="@drawable/coin_icon" />
 
         <TextView
             android:id="@+id/tv_ico_name"
@@ -28,7 +28,7 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@+id/civ_ico_logo"
             android:layout_toRightOf="@+id/civ_ico_logo"
-            android:text="ETC"
+            android:text="@string/token_name"
             android:textColor="@color/property_ico_name_color"
             android:textSize="15sp" />
 

@@ -17,7 +17,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="77dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/wallet_logo_demo" />
+        android:src="@drawable/coin_icon" />
 
 
     <TextView

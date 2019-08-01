@@ -79,7 +79,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="14dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/wallet_logo_demo" />
+            android:src="@drawable/coin_icon" />
 
         <LinearLayout
             android:id="@+id/lly_wallet_property"
@@ -102,7 +102,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/transfer_ether_unit"
+                android:paddingLeft="5dp"
+                android:text="@string/token_name"
                 android:textColor="@color/property_ico_name_color"
                 android:textSize="14sp" />
         </LinearLayout>
