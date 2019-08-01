@@ -280,7 +280,6 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
         refreshLayout.setHeaderView(headerView);
         headView = LayoutInflater.from(getContext()).inflate(R.layout.list_header_item, (ViewGroup) recyclerView.getParent(), false);
         mIv = headView.findViewById(R.id.iv);
-        headView.findViewById(R.id.lly_add_token).setOnClickListener(this);
         headView.findViewById(R.id.lly_wallet_address).setOnClickListener(this);
         headView.findViewById(R.id.civ_wallet_logo).setOnClickListener(this);
         tvWalletName = (TextView) headView.findViewById(R.id.tv_wallet_name);
@@ -353,15 +352,6 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 startActivityForResult(intent, CREATE_WALLET_REQUEST);
                 openOrCloseDrawerLayout();
                 break;
-            case R.id.lly_add_token:// 跳转添加资产
-//                tokensViewModel.showAddToken(this.getApplicationContext());
-
-                intent = new Intent(mContext, AddTokenActivity.class);
-                intent.putExtra(WALLET,  currEthWallet.getAddress());
-                startActivityForResult(intent, ADD_NEW_PROPERTY_REQUEST);
-
-                break;
-
             case R.id.lly_wallet_address:  // 跳转收款码
                 intent = new Intent(mContext, GatheringQRCodeActivity.class);
                 wallet = WalletDaoUtils.getCurrent();
