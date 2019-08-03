@@ -1,6 +1,7 @@
 package pro.upchain.wallet.ui.fragment;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
 
 import pro.upchain.wallet.R;
@@ -35,35 +36,17 @@ public class MineFragment extends BaseFragment {
     public void configViews() {
     }
 
-    @OnClick({R.id.lly_wallet_manage, R.id.lly_contacts, R.id.lly_msg_center, R.id.ask_help
-            , R.id.lly_system_setting, R.id.lly_trade_recode})
+    @OnClick({R.id.lly_contacts, R.id.github_website})
     public void onClick(View view) {
-        Intent intent = null;
+        Intent intent;
         switch (view.getId()) {
             case R.id.lly_contacts:
                 intent = new Intent(getActivity(), ContactsActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.lly_wallet_manage:
-                intent = new Intent(getActivity(), WalletMangerActivity.class);
+            case R.id.github_website:
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/spockchain/MySpock"));
                 startActivity(intent);
-                break;
-            case R.id.lly_msg_center:
-                intent = new Intent(getActivity(), MessageCenterActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.lly_system_setting:
-                intent = new Intent(getActivity(), SystemSettingActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.lly_trade_recode:
-                intent = new Intent(getActivity(), TransactionsActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.ask_help:
-                intent = new Intent(getActivity(), HelpActivity.class);
-                startActivity(intent);
-
                 break;
         }
     }
