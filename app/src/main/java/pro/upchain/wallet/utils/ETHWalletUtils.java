@@ -188,7 +188,7 @@ public class ETHWalletUtils {
         }
         ETHWallet ethWallet = new ETHWallet();
         ethWallet.setName(walletName);
-        ethWallet.setAddress(Keys.toChecksumAddress(keyStoreFile.getAddress()));
+        ethWallet.setAddress(Keys.toChecksumAddress(keyStoreFile.getAddress()).replaceFirst("0x", "SPOCK-"));
         ethWallet.setKeystorePath(destination.getAbsolutePath());
         ethWallet.setPassword(Md5Utils.md5(pwd));
         return ethWallet;
