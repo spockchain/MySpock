@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <pro.upchain.wallet.view.ListViewForScrollView
+        <com.spockchain.wallet.view.ListViewForScrollView
             android:id="@+id/lv_wallet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
