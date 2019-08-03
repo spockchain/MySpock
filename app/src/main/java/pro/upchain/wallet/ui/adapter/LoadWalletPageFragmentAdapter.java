@@ -24,8 +24,7 @@ import static android.support.v4.view.PagerAdapter.POSITION_NONE;
 
 public class LoadWalletPageFragmentAdapter extends IndicatorViewPager.IndicatorFragmentPagerAdapter {
 
-    private final int[] TITLES = {R.string.load_wallet_indicator_mnemonic, R.string.load_wallet_indicator_official
-            , R.string.load_wallet_indicator_private_key};
+    private final int[] TITLES = {R.string.load_wallet_indicator_mnemonic, R.string.load_wallet_indicator_private_key};
 
 
     private List<BaseFragment> fragmentList;

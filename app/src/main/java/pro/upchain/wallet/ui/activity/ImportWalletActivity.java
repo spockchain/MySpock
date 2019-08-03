@@ -68,8 +68,9 @@ public class ImportWalletActivity extends BaseActivity {
 
         firstAccount = getIntent().getBooleanExtra("first_account", false);
 
+        // Hide the keystore import because our desktop wallet doesn't support it.
+        //        fragmentList.add(new ImportKeystoreFragment());
         fragmentList.add(new ImportMnemonicFragment());
-        fragmentList.add(new ImportKeystoreFragment());
         fragmentList.add(new ImportPrivateKeyFragment());
     }
 

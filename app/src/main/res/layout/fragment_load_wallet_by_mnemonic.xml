@@ -24,6 +24,7 @@
             android:textSize="13sp" />
 
         <LinearLayout
+            android:visibility="gone"
             android:layout_width="330dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="21dp"
@@ -58,6 +59,7 @@
         </LinearLayout>
 
         <View
+            android:visibility="gone"
             android:layout_width="330dp"
             android:layout_height="0.75dp"
             android:layout_marginTop="10dp"
