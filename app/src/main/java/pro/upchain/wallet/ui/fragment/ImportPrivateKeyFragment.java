@@ -64,23 +64,23 @@ public class ImportPrivateKeyFragment extends BaseFragment {
     @Override
     public void configViews() {
 
-        cbAgreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    String privateKey = etPrivateKey.getText().toString().trim();
-                    String walletPwd = etWalletPwd.getText().toString().trim();
-                    String confirmPwd = etWalletPwdAgain.getText().toString().trim();
-                    String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
-                    boolean verifyWalletInfo = verifyInfo(privateKey, walletPwd, confirmPwd, pwdReminder);
-                    if (verifyWalletInfo) {
-                        btnLoadWallet.setEnabled(true);
-                    }
-                } else {
-                    btnLoadWallet.setEnabled(false);
-                }
-            }
-        });
+//        cbAgreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                if (b) {
+//                    String privateKey = etPrivateKey.getText().toString().trim();
+//                    String walletPwd = etWalletPwd.getText().toString().trim();
+//                    String confirmPwd = etWalletPwdAgain.getText().toString().trim();
+//                    String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
+//                    boolean verifyWalletInfo = verifyInfo(privateKey, walletPwd, confirmPwd, pwdReminder);
+//                    if (verifyWalletInfo) {
+//                        btnLoadWallet.setEnabled(true);
+//                    }
+//                } else {
+//                    btnLoadWallet.setEnabled(false);
+//                }
+//            }
+//        });
 
     }
 

@@ -133,7 +133,6 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="31dp"
             android:background="@drawable/create_wallet_btn_bg_selector"
-            android:enabled="false"
             android:gravity="center"
             android:text="@string/load_wallet_btn"
             android:textColor="@color/white" />
