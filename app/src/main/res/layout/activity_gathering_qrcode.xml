@@ -74,6 +74,7 @@
         </LinearLayout>
 
         <de.hdodenhof.circleimageview.CircleImageView
+            android:visibility="gone"
             android:id="@+id/civ_wallet_logo"
             android:layout_width="63dp"
             android:layout_height="63dp"
