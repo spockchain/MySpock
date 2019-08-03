@@ -332,6 +332,9 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 swipeRefresh.setRefreshing(false);
             }
         });
+        // Hide total asset for now.
+        tvTolalAssetValue.setVisibility(View.INVISIBLE);
+        tvTolalAsset.setVisibility(View.INVISIBLE);
     }
 
     @OnClick({R.id.lly_menu, R.id.lly_qrcode_scanner, R.id.lly_create_wallet})

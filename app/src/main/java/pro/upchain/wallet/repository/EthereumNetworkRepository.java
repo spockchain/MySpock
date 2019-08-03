@@ -37,8 +37,8 @@ public class EthereumNetworkRepository  {
 
     private final NetworkInfo[] NETWORKS = new NetworkInfo[] {
             new NetworkInfo("TestNet", "SPOCK",
-                    "http://47.110.131.233:9666",
-                    "http://47.110.131.233:9666",
+                    "http://52.175.72.85:9666",
+                    "http://52.175.72.85:9666",
                     null,123123124, false),
     };
 
