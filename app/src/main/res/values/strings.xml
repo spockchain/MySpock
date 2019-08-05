@@ -61,7 +61,7 @@
     <string name="transfer_next">下一步</string>
     <string name="transfer_gas_slow">慢</string>
     <string name="transfer_gas_quick">快</string>
-    <string name="transfer_ether_unit">&#160;ether</string>
+    <string name="transfer_ether_unit">&#160;SPOK</string>
 
     <string name="property_detail_title">ETC</string>
     <string name="property_detail_transfer">转账</string>

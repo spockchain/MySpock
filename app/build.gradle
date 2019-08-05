@@ -7,7 +7,7 @@ android {
     buildToolsVersion '28.0.3'
 
     defaultConfig {
-        applicationId "pro.upchain.ethwallet"
+        applicationId "com.spockchain.wallet"
         minSdkVersion 21
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 26
