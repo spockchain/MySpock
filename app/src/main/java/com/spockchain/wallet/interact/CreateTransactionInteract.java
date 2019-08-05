@@ -53,11 +53,18 @@ public class CreateTransactionInteract {
     public Single<String>  createEthTransaction(ETHWallet from,  String to, BigInteger amount, BigInteger gasPrice, BigInteger gasLimit, String password) {
         final Web3j web3j = Web3j.build(new HttpService(networkRepository.getDefaultNetwork().rpcServerUrl));
 
+        // web3 lib only accepts 0x for now.
+        to = to.toUpperCase();
+        if (to.startsWith("SPOCK-")) {
+            to = to.replaceFirst("SPOCK-", "0x");
+        }
+        String toAddress = to;
+
         return networkRepository.getLastTransactionNonce(web3j, from.address)
                 .flatMap(nonce -> Single.fromCallable( () -> {
 
             Credentials credentials = WalletUtils.loadCredentials(password,  from.getKeystorePath());
-            RawTransaction rawTransaction = RawTransaction.createEtherTransaction(nonce, gasPrice, gasLimit, to, amount);
+            RawTransaction rawTransaction = RawTransaction.createEtherTransaction(nonce, gasPrice, gasLimit, toAddress, amount);
             byte[] signedMessage = TransactionEncoder.signMessage(rawTransaction, credentials);
 
             String hexValue = Numeric.toHexString(signedMessage);
