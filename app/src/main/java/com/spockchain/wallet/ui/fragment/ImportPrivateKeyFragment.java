@@ -27,6 +27,8 @@ import butterknife.OnClick;
 public class ImportPrivateKeyFragment extends BaseFragment {
     @BindView(R.id.et_private_key)
     EditText etPrivateKey;
+    @BindView(R.id.et_wallet_name)
+    EditText etWalletName;
     @BindView(R.id.et_wallet_pwd)
     EditText etWalletPwd;
     @BindView(R.id.et_wallet_pwd_again)
@@ -64,24 +66,6 @@ public class ImportPrivateKeyFragment extends BaseFragment {
     @Override
     public void configViews() {
 
-//        cbAgreement.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b) {
-//                    String privateKey = etPrivateKey.getText().toString().trim();
-//                    String walletPwd = etWalletPwd.getText().toString().trim();
-//                    String confirmPwd = etWalletPwdAgain.getText().toString().trim();
-//                    String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
-//                    boolean verifyWalletInfo = verifyInfo(privateKey, walletPwd, confirmPwd, pwdReminder);
-//                    if (verifyWalletInfo) {
-//                        btnLoadWallet.setEnabled(true);
-//                    }
-//                } else {
-//                    btnLoadWallet.setEnabled(false);
-//                }
-//            }
-//        });
-
     }
 
     @OnClick({R.id.btn_load_wallet})
@@ -89,21 +73,25 @@ public class ImportPrivateKeyFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.btn_load_wallet:
                 String privateKey = etPrivateKey.getText().toString().trim();
+                String name = etWalletName.getText().toString().trim();
                 String walletPwd = etWalletPwd.getText().toString().trim();
                 String confirmPwd = etWalletPwdAgain.getText().toString().trim();
                 String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
-                boolean verifyWalletInfo = verifyInfo(privateKey, walletPwd, confirmPwd, pwdReminder);
+                boolean verifyWalletInfo = verifyInfo(privateKey, name, walletPwd, confirmPwd, pwdReminder);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.loading_wallet_tip));
-                    createWalletInteract.loadWalletByPrivateKey(privateKey, walletPwd).subscribe(this::loadSuccess, this::onError);
+                    createWalletInteract.loadWalletByPrivateKey(privateKey, walletPwd, name).subscribe(this::loadSuccess, this::onError);
                 }
                 break;
         }
     }
 
-    private boolean verifyInfo(String privateKey, String walletPwd, String confirmPwd, String pwdReminder) {
+    private boolean verifyInfo(String privateKey, String name, String walletPwd, String confirmPwd, String pwdReminder) {
         if (TextUtils.isEmpty(privateKey)) {
             ToastUtils.showToast(R.string.load_wallet_by_private_key_input_tip);
+            return false;
+        } else if (TextUtils.isEmpty(name)) {
+            ToastUtils.showToast(R.string.load_wallet_by_private_key_wallet_name_invalid);
             return false;
         } else if (TextUtils.isEmpty(walletPwd)) {
             ToastUtils.showToast(R.string.create_wallet_pwd_input_tips);

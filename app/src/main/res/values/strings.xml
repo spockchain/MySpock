@@ -151,6 +151,8 @@
     <string name="load_wallet_by_private_key_hint">明文私钥</string>
     <string name="load_wallet_by_private_key_help">什么是私钥？</string>
     <string name="load_wallet_by_private_key_wallet_pwd_too_short">钱包密码至少为9位</string>
+    <string name="load_wallet_by_private_key_wallet_name_invalid">钱包名称不能为空</string>
+
 
     <string name="wallet_detail_wallet_name">钱包名</string>
     <string name="wallet_detail_modify_pwd">修改密码</string>

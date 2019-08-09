@@ -38,10 +38,10 @@ public class CreateWalletInteract {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Single<ETHWallet> loadWalletByPrivateKey(final String privateKey, final String pwd) {
+    public Single<ETHWallet> loadWalletByPrivateKey(final String privateKey, final String pwd, final String name) {
         return Single.fromCallable(() -> {
 
-                    ETHWallet ethWallet = ETHWalletUtils.loadWalletByPrivateKey(privateKey, pwd);
+                    ETHWallet ethWallet = ETHWalletUtils.loadWalletByPrivateKey(privateKey, pwd, name);
                     if (ethWallet != null) {
                         WalletDaoUtils.insertNewWallet(ethWallet);
                     }
@@ -52,10 +52,10 @@ public class CreateWalletInteract {
 
     }
 
-    public Single<ETHWallet> loadWalletByMnemonic(final String bipPath, final String mnemonic, final String pwd) {
+    public Single<ETHWallet> loadWalletByMnemonic(final String bipPath, final String mnemonic, final String pwd, final String name) {
         return Single.fromCallable(() -> {
             ETHWallet ethWallet = ETHWalletUtils.importMnemonic(bipPath
-                    , Arrays.asList(mnemonic.split(" ")), pwd);
+                    , Arrays.asList(mnemonic.split(" ")), pwd, name);
             if (ethWallet != null) {
                 WalletDaoUtils.insertNewWallet(ethWallet);
             }
