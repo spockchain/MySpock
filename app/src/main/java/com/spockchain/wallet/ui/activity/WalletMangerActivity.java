@@ -52,11 +52,6 @@ public class WalletMangerActivity extends BaseActivity {
 
 
         fetchWalletInteract = new FetchWalletInteract();
-
-        fetchWalletInteract.fetch().subscribe(
-                this::showWalletList
-        );
-
     }
 
     @Override
@@ -78,6 +73,14 @@ public class WalletMangerActivity extends BaseActivity {
                 startActivityForResult(intent, WALLET_DETAIL_REQUEST);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        fetchWalletInteract.fetch().subscribe(
+                this::showWalletList
+        );
     }
 
     @OnClick({R.id.lly_create_wallet, R.id.lly_load_wallet})

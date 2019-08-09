@@ -27,9 +27,8 @@ import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.entity.Ticker;
 import com.spockchain.wallet.entity.Token;
 import com.spockchain.wallet.interact.FetchWalletInteract;
-import com.spockchain.wallet.ui.activity.AddTokenActivity;
-import com.spockchain.wallet.ui.activity.CreateWalletActivity;
 import com.spockchain.wallet.ui.activity.GatheringQRCodeActivity;
+import com.spockchain.wallet.ui.activity.ImportWalletActivity;
 import com.spockchain.wallet.ui.activity.PropertyDetailActivity;
 import com.spockchain.wallet.ui.activity.QRCodeScannerActivity;
 import com.spockchain.wallet.ui.activity.SendActivity;
@@ -318,6 +317,13 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
             }
         }
 
+        if (drawerWalletAdapter != null) {
+            fetchWalletInteract.fetch().subscribe((ethWallets) -> {
+                drawerWalletAdapter.setDatas(ethWallets);
+                drawerWalletAdapter.notifyDataSetChanged();
+            });
+        }
+
     }
 
 
@@ -351,7 +357,7 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 openOrCloseDrawerLayout();
                 break;
             case R.id.lly_create_wallet:// 创建钱包
-                intent = new Intent(mContext, CreateWalletActivity.class);
+                intent = new Intent(mContext, ImportWalletActivity.class);
                 startActivityForResult(intent, CREATE_WALLET_REQUEST);
                 openOrCloseDrawerLayout();
                 break;
