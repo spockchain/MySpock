@@ -48,6 +48,8 @@ import java.text.DecimalFormat;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.spockchain.wallet.C.SPCOK_CHAIN_NAME;
+
 /**
  * Created by Tiny 熊 @ Upchain.pro
  * WeiXin: xlbxiong
@@ -437,7 +439,7 @@ public class SendActivity extends BaseActivity {
     private void parseScanResult(String result) {
         if (result.contains(":") && result.contains("?")) {  // 符合协议格式
             String[] urlParts = result.split(":");
-            if (urlParts[0].equals("ethereum")) {
+            if (urlParts[0].equals(SPCOK_CHAIN_NAME)) {
                 urlParts =  urlParts[1].split("\\?");
 
                 fillAddress(urlParts[0]);

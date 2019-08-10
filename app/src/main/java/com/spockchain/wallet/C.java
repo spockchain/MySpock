@@ -63,6 +63,8 @@ public abstract class C {
     public static final long NETWORK_FEE_MAX = 20000000000000000L;
     public static final int ETHER_DECIMALS = 18;
 
+    public static final String SPCOK_CHAIN_NAME = "SPOCK-CHAIN";
+
     public interface ErrorCode {
 
         int UNKNOWN = 1;

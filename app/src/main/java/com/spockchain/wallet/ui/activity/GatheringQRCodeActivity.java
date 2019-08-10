@@ -31,6 +31,7 @@ import io.reactivex.Single;
 import static com.spockchain.wallet.C.EXTRA_ADDRESS;
 import static com.spockchain.wallet.C.EXTRA_CONTRACT_ADDRESS;
 import static com.spockchain.wallet.C.EXTRA_DECIMALS;
+import static com.spockchain.wallet.C.SPCOK_CHAIN_NAME;
 
 /**
  * Created by Tiny 熊 @ Upchain.pro
@@ -80,7 +81,7 @@ public class GatheringQRCodeActivity extends BaseActivity {
     // ethereum:0x6B523CD4FCDF3332BcB3177050e22cF7272b4c3A?contractAddress=0xd03e0c90c088d92f05c0f493312860d9e524049c&decimal=1&value=100000
     private void initAddressQRCode() {
 
-        qRStr = "ethereum:" + walletAddress + "?decimal=" + decimals;
+        qRStr = SPCOK_CHAIN_NAME + ":" + walletAddress + "?decimal=" + decimals;
         if (!TextUtils.isEmpty(contractAddress)) {
             qRStr += "&contractAddress=" + contractAddress;
         }
