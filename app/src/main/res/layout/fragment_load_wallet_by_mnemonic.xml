@@ -109,28 +109,6 @@
             android:background="@color/mine_menu_divider_color" />
 
         <EditText
-            android:id="@+id/et_wallet_pwd_again"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginTop="21dp"
-            android:background="@null"
-            android:hint="@string/create_wallet_pwd_again_hint"
-            android:inputType="textPassword"
-            android:maxLength="16"
-            android:textColor="@color/discovery_application_item_name_color"
-            android:textSize="13sp" />
-
-        <View
-            android:layout_width="330dp"
-            android:layout_height="0.75dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:background="@color/mine_menu_divider_color" />
-
-        <EditText
             android:id="@+id/et_wallet_pwd_reminder_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

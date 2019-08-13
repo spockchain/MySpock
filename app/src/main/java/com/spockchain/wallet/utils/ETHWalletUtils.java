@@ -54,11 +54,10 @@ public class ETHWalletUtils {
      * @return
      */
     public static ETHWallet generateMnemonic(String walletName, String pwd) {
-        String[] pathArray = ETH_LEDGER_TYPE.split("/");
-        String passphrase = "";
+        String[] pathArray = ETH_JAXX_TYPE.split("/");
         long creationTimeSeconds = System.currentTimeMillis() / 1000;
 
-        DeterministicSeed ds = new DeterministicSeed(secureRandom, 128, passphrase, creationTimeSeconds);
+        DeterministicSeed ds = new DeterministicSeed(secureRandom, 128, pwd, creationTimeSeconds);
         return generateWalletByMnemonic(walletName, ds, pathArray, pwd);
     }
 
@@ -80,7 +79,7 @@ public class ETHWalletUtils {
             //内容不对
             return null;
         }
-        String passphrase = "";
+        String passphrase = pwd;
         long creationTimeSeconds = System.currentTimeMillis() / 1000;
         DeterministicSeed ds = new DeterministicSeed(list, null, passphrase, creationTimeSeconds);
         return generateWalletByMnemonic(name, ds, pathArray, pwd);

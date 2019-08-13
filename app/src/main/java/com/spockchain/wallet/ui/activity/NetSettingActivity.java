@@ -17,10 +17,8 @@ import com.spockchain.wallet.repository.EthereumNetworkRepository;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.spockchain.wallet.C.ETHEREUM_MAIN_NETWORK_NAME;
-import static com.spockchain.wallet.C.KOVAN_NETWORK_NAME;
-import static com.spockchain.wallet.C.LOCAL_DEV_NETWORK_NAME;
-import static com.spockchain.wallet.C.ROPSTEN_NETWORK_NAME;
+import static com.spockchain.wallet.C.SPOCK_MAIN_NETWORK_NAME;
+import static com.spockchain.wallet.C.SPOCK_TEST_NETWORK_NAME;
 
 /**
  * Created by Tiny 熊 @ Upchain.pro
@@ -43,15 +41,8 @@ public class NetSettingActivity extends BaseActivity {
     @BindView(R.id.iv_mainnet)
     ImageView ivMainnet;
 
-    @BindView(R.id.iv_kovan)
-    ImageView ivKovan;
-
-    @BindView(R.id.iv_ropsten)
-    ImageView ivRopsten;
-
-
-    @BindView(R.id.iv_local_dev)
-    ImageView ivLocalDev;
+    @BindView(R.id.iv_testnet)
+    ImageView ivTestnet;
 
     private String networkName;
 
@@ -81,26 +72,12 @@ public class NetSettingActivity extends BaseActivity {
 
         networkName = ethereumNetworkRepository.getDefaultNetwork().name;
 
-        if (ETHEREUM_MAIN_NETWORK_NAME.equals(networkName)) {
+        if (SPOCK_MAIN_NETWORK_NAME.equals(networkName)) {
             ivMainnet.setVisibility(View.VISIBLE);
-            ivKovan.setVisibility(View.GONE);
-            ivRopsten.setVisibility(View.GONE);
-            ivLocalDev.setVisibility(View.GONE);
-        } else if (KOVAN_NETWORK_NAME.equals(networkName)) {
+            ivTestnet.setVisibility(View.GONE);
+        } else if (SPOCK_TEST_NETWORK_NAME.equals(networkName)) {
             ivMainnet.setVisibility(View.GONE);
-            ivKovan.setVisibility(View.VISIBLE);
-            ivRopsten.setVisibility(View.GONE);
-            ivLocalDev.setVisibility(View.GONE);
-        } else if (ROPSTEN_NETWORK_NAME.equals(networkName)) {
-            ivMainnet.setVisibility(View.GONE);
-            ivKovan.setVisibility(View.GONE);
-            ivRopsten.setVisibility(View.VISIBLE);
-            ivLocalDev.setVisibility(View.GONE);
-        } else if (LOCAL_DEV_NETWORK_NAME.equals(networkName)) {
-            ivMainnet.setVisibility(View.GONE);
-            ivKovan.setVisibility(View.GONE);
-            ivRopsten.setVisibility(View.GONE);
-            ivLocalDev.setVisibility(View.VISIBLE);
+            ivTestnet.setVisibility(View.VISIBLE);
         }
     }
 
@@ -109,37 +86,18 @@ public class NetSettingActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.rl_mainnet, R.id.rl_kovan, R.id.rl_ropsten, R.id.rl_local_dev, R.id.rl_btn})
+    @OnClick({R.id.rl_mainnet, R.id.rl_testnet, R.id.rl_btn})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_mainnet:
-                networkName = ETHEREUM_MAIN_NETWORK_NAME;
+                networkName = SPOCK_MAIN_NETWORK_NAME;
                 ivMainnet.setVisibility(View.VISIBLE);
-                ivKovan.setVisibility(View.GONE);
-                ivRopsten.setVisibility(View.GONE);
-                ivLocalDev.setVisibility(View.GONE);
+                ivTestnet.setVisibility(View.GONE);
                 break;
-            case R.id.rl_kovan:
-                networkName = KOVAN_NETWORK_NAME;
+            case R.id.rl_testnet:
+                networkName = SPOCK_TEST_NETWORK_NAME;
                 ivMainnet.setVisibility(View.GONE);
-                ivKovan.setVisibility(View.VISIBLE);
-                ivRopsten.setVisibility(View.GONE);
-                ivLocalDev.setVisibility(View.GONE);
-                break;
-            case R.id.rl_ropsten:
-                networkName = ROPSTEN_NETWORK_NAME;
-                ivMainnet.setVisibility(View.GONE);
-                ivKovan.setVisibility(View.GONE);
-                ivRopsten.setVisibility(View.VISIBLE);
-                ivLocalDev.setVisibility(View.GONE);
-
-                break;
-            case R.id.rl_local_dev:
-                 networkName = LOCAL_DEV_NETWORK_NAME;
-                ivMainnet.setVisibility(View.GONE);
-                ivKovan.setVisibility(View.GONE);
-                ivRopsten.setVisibility(View.GONE);
-                ivLocalDev.setVisibility(View.VISIBLE);
+                ivTestnet.setVisibility(View.VISIBLE);
 
                  break;
             case R.id.rl_btn:// 设置语言并保存

@@ -7,6 +7,7 @@ import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 
+import com.spockchain.wallet.C;
 import com.spockchain.wallet.entity.NetworkInfo;
 
 import java.math.BigInteger;
@@ -15,16 +16,6 @@ import java.util.Set;
 
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-
-import static com.spockchain.wallet.C.CLASSIC_NETWORK_NAME;
-import static com.spockchain.wallet.C.ETC_SYMBOL;
-import static com.spockchain.wallet.C.ETHEREUM_MAIN_NETWORK_NAME;
-import static com.spockchain.wallet.C.ETH_SYMBOL;
-import static com.spockchain.wallet.C.KOVAN_NETWORK_NAME;
-import static com.spockchain.wallet.C.LOCAL_DEV_NETWORK_NAME;
-import static com.spockchain.wallet.C.POA_NETWORK_NAME;
-import static com.spockchain.wallet.C.POA_SYMBOL;
-import static com.spockchain.wallet.C.ROPSTEN_NETWORK_NAME;
 
 /**
  * Created by Tiny 熊 @ Upchain.pro
@@ -36,7 +27,11 @@ public class EthereumNetworkRepository  {
     public static EthereumNetworkRepository sSelf;
 
     private final NetworkInfo[] NETWORKS = new NetworkInfo[] {
-            new NetworkInfo("TestNet", "SPOCK",
+            new NetworkInfo(C.SPOCK_MAIN_NETWORK_NAME, "SPOCK",
+                    "http://47.52.154.21:9666",
+                    "http://47.52.154.21:9666",
+                    null,234234234, false),
+            new NetworkInfo(C.SPOCK_TEST_NETWORK_NAME, "SPOCK",
                     "http://52.175.72.85:9666",
                     "http://52.175.72.85:9666",
                     null,123123124, false),

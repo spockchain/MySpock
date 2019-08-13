@@ -15,13 +15,13 @@ public abstract class C {
     public static final int EXPORT_REQUEST_CODE = 1002;
     public static final int SHARE_REQUEST_CODE = 1003;
 
-    public static final String ETHEREUM_MAIN_NETWORK_NAME = "Mainnet";
+    public static final String SPOCK_MAIN_NETWORK_NAME = "Mainnet";
     public static final String CLASSIC_NETWORK_NAME = "Ethereum Classic";
     public static final String POA_NETWORK_NAME = "POA Network";
     public static final String KOVAN_NETWORK_NAME = "Kovan";
     public static final String ROPSTEN_NETWORK_NAME = "Ropsten";
 
-    public static final String LOCAL_DEV_NETWORK_NAME = "local_dev";
+    public static final String SPOCK_TEST_NETWORK_NAME = "Testnet";
 
     public static final String ETHEREUM_TIKER = "ethereum";
     public static final String POA_TIKER = "poa";

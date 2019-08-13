@@ -133,7 +133,6 @@
         android:background="@color/mine_menu_divider_color" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/lly_system_setting"
         android:layout_width="match_parent"
         android:layout_height="46dp"
@@ -156,10 +155,6 @@
             android:textSize="13sp" />
     </LinearLayout>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:background="@color/mine_menu_divider_color" />
 
     <LinearLayout
         android:visibility="gone"
@@ -287,7 +282,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="版本号：v1.1.1"
+            android:text="版本号：v1.1.2"
             android:textColor="@color/mine_menu_text_color"
             android:textSize="13sp" />
     </LinearLayout>

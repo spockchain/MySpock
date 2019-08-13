@@ -9,6 +9,7 @@ import com.spockchain.wallet.base.BaseFragment;
 import com.spockchain.wallet.ui.activity.ContactsActivity;
 import com.spockchain.wallet.ui.activity.HelpActivity;
 import com.spockchain.wallet.ui.activity.MessageCenterActivity;
+import com.spockchain.wallet.ui.activity.NetSettingActivity;
 import com.spockchain.wallet.ui.activity.SystemSettingActivity;
 import com.spockchain.wallet.ui.activity.TransactionsActivity;
 import com.spockchain.wallet.ui.activity.WalletMangerActivity;
@@ -36,7 +37,7 @@ public class MineFragment extends BaseFragment {
     public void configViews() {
     }
 
-    @OnClick({R.id.lly_wallet_manage, R.id.lly_trade_recode, R.id.lly_contacts, R.id.github_website})
+    @OnClick({R.id.lly_wallet_manage, R.id.lly_trade_recode, R.id.lly_contacts, R.id.github_website, R.id.lly_system_setting})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -54,6 +55,10 @@ public class MineFragment extends BaseFragment {
                 break;
             case R.id.github_website:
                 intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/spockchain/MySpock"));
+                startActivity(intent);
+                break;
+            case  R.id.lly_system_setting:
+                intent = new Intent(getActivity(), NetSettingActivity.class);
                 startActivity(intent);
                 break;
         }

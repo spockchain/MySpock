@@ -37,8 +37,6 @@ public class ImportMnemonicFragment extends BaseFragment {
     EditText etStandard;
     @BindView(R.id.et_wallet_pwd)
     EditText etWalletPwd;
-    @BindView(R.id.et_wallet_pwd_again)
-    EditText etWalletPwdAgain;
     @BindView(R.id.et_wallet_pwd_reminder_info)
     EditText etWalletPwdReminderInfo;
     @BindView(R.id.cb_agreement)
@@ -54,7 +52,7 @@ public class ImportMnemonicFragment extends BaseFragment {
 
     private LoadWalletSelectStandardPopupWindow popupWindow;
 
-    private String ethType = ETHWalletUtils.ETH_LEDGER_TYPE;
+    private String ethType = ETHWalletUtils.ETH_JAXX_TYPE;
 
     @Override
     public int getLayoutResId() {
@@ -125,9 +123,8 @@ public class ImportMnemonicFragment extends BaseFragment {
                 String mnemonic = etMnemonic.getText().toString().trim();
                 String name = etWalletName.getText().toString().trim();
                 String walletPwd = etWalletPwd.getText().toString().trim();
-                String confirmPwd = etWalletPwdAgain.getText().toString().trim();
                 String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
-                boolean verifyWalletInfo = verifyInfo(mnemonic, name, walletPwd, confirmPwd, pwdReminder);
+                boolean verifyWalletInfo = verifyInfo(mnemonic, name, walletPwd, pwdReminder);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.loading_wallet_tip));
                     createWalletInteract.loadWalletByMnemonic(ethType, mnemonic, walletPwd, name).subscribe(this::loadSuccess, this::onError);
@@ -140,7 +137,7 @@ public class ImportMnemonicFragment extends BaseFragment {
         }
     }
 
-    private boolean verifyInfo(String mnemonic, String name, String walletPwd, String confirmPwd, String pwdReminder) {
+    private boolean verifyInfo(String mnemonic, String name, String walletPwd, String pwdReminder) {
         if (TextUtils.isEmpty(mnemonic)) {
             ToastUtils.showToast(R.string.load_wallet_by_mnemonic_input_tip);
             return false;
@@ -152,15 +149,6 @@ public class ImportMnemonicFragment extends BaseFragment {
             return false;
         } else if (WalletDaoUtils.checkRepeatByMenmonic(mnemonic)) {
             ToastUtils.showToast(R.string.load_wallet_already_exist);
-            return false;
-        }
-//        else if (TextUtils.isEmpty(walletPwd)) {
-//            ToastUtils.showToast(R.string.create_wallet_pwd_input_tips);
-//            // 同时判断强弱
-//            return false;
-//        }
-        else if (TextUtils.isEmpty(confirmPwd) || !TextUtils.equals(confirmPwd, walletPwd)) {
-            ToastUtils.showToast(R.string.create_wallet_pwd_confirm_input_tips);
             return false;
         }
         return true;
