@@ -54,7 +54,7 @@ public class ETHWalletUtils {
      * @return
      */
     public static ETHWallet generateMnemonic(String walletName, String pwd) {
-        String[] pathArray = ETH_JAXX_TYPE.split("/");
+        String[] pathArray = ETH_LEDGER_TYPE.split("/");
         String passphrase = "";
         long creationTimeSeconds = System.currentTimeMillis() / 1000;
 

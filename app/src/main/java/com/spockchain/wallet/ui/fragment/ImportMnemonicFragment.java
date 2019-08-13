@@ -54,7 +54,7 @@ public class ImportMnemonicFragment extends BaseFragment {
 
     private LoadWalletSelectStandardPopupWindow popupWindow;
 
-    private String ethType = ETHWalletUtils.ETH_JAXX_TYPE;
+    private String ethType = ETHWalletUtils.ETH_LEDGER_TYPE;
 
     @Override
     public int getLayoutResId() {
