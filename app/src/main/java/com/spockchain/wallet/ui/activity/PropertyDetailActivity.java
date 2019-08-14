@@ -90,7 +90,7 @@ public class PropertyDetailActivity extends BaseActivity {
         contractAddress = intent.getStringExtra(C.EXTRA_CONTRACT_ADDRESS);
         decimals = intent.getIntExtra(C.EXTRA_DECIMALS, C.ETHER_DECIMALS);
         symbol = intent.getStringExtra(C.EXTRA_SYMBOL);
-        symbol = symbol == null ? C.ETH_SYMBOL : symbol;
+        symbol = symbol == null ? C.SPOCK_SYMBOL: symbol;
 
         tvTitle.setText(symbol);
 
@@ -152,7 +152,8 @@ public class PropertyDetailActivity extends BaseActivity {
         });
 
         refreshLayout.setOnRefreshListener(viewModel::fetchTransactions);
-
+        // TODO(satoshi.meow): Enable the refresh after we support fetching transaction.
+        refreshLayout.setEnabled(false);
     }
 
 
@@ -161,12 +162,7 @@ public class PropertyDetailActivity extends BaseActivity {
             return;
         }
 
-        if (shouldShow) {
-//            if (transactionLists.size() > 0) {
-//                refreshLayout.setRefreshing(true);
-//            }
-
-        } else {
+        if (!shouldShow) {
             refreshLayout.setRefreshing(false);
         }
     }

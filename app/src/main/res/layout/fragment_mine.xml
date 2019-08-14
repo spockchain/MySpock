@@ -133,6 +133,7 @@
         android:background="@color/mine_menu_divider_color" />
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/lly_system_setting"
         android:layout_width="match_parent"
         android:layout_height="46dp"

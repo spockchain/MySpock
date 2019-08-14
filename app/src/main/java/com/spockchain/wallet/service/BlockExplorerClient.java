@@ -79,7 +79,7 @@ public class BlockExplorerClient implements BlockExplorerClientType {
 	}
 
 
-//	http://localhost:8000/transactions?address=0x856e604698f79cef417aab0c6d6e1967191dba43
+	// TODO(satoshi.meow): Use http://www.spock.network/addr.
 	private interface TransactionsApiClient {
 		@GET("/transactions?limit=50")
         Observable<Response<EtherScanResponse>> fetchTransactions(
