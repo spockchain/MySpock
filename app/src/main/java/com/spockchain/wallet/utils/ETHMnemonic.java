@@ -30,29 +30,6 @@ public class ETHMnemonic {
 
     private static SecureRandom secureRandom = new SecureRandom();
 
-    public static void main(String[] args) {
-        //生成助记词
-        generateMnemonic(ETH_TYPE, "11111111");
-
-
-        //导入助记词
-        //[team, bid, property, oval, hedgehog, observe, badge, cabin, color, cruel, casino, blame]
-        List<String> list = new ArrayList<>();
-        list.add("team");
-        list.add("bid");
-        list.add("property");
-        list.add("oval");
-        list.add("hedgehog");
-        list.add("observe");
-        list.add("badge");
-        list.add("cabin");
-        list.add("color");
-        list.add("cruel");
-        list.add("casino");
-        list.add("blame");
-//		importMnemonic(ETH_TYPE, list, "11111111");
-    }
-
     public static EthHDWallet generateMnemonic(String path, String password) {
         if (!path.startsWith("m") && !path.startsWith("M")) {
             //参数非法
@@ -69,9 +46,8 @@ public class ETHMnemonic {
             return null;
         }
 
-        String passphrase = "";
         long creationTimeSeconds = System.currentTimeMillis() / 1000;
-        DeterministicSeed ds = new DeterministicSeed(secureRandom, 128, passphrase, creationTimeSeconds);
+        DeterministicSeed ds = new DeterministicSeed(secureRandom, 128, password, creationTimeSeconds);
         return createEthWallet(ds, pathArray, password);
     }
 
