@@ -25,6 +25,11 @@ public class SplashActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        if (!isTaskRoot()) {
+            finish();
+            return;
+        }
+
         new FetchWalletInteract().fetch().observeOn(AndroidSchedulers.mainThread()).delay(2, TimeUnit.SECONDS).subscribe(
                 this::onWalltes, this::onError
         );

@@ -29,7 +29,7 @@ public class EthereumNetworkRepository  {
     private final NetworkInfo[] NETWORKS = new NetworkInfo[] {
             new NetworkInfo(C.SPOCK_MAIN_NETWORK_NAME, "SPOCK",
                     "http://39.105.230.38:9666",
-                    "http://39.105.230.38:9666",
+                    "http://www.spock.network",
                     null,234234234, false),
             new NetworkInfo(C.SPOCK_TEST_NETWORK_NAME, "SPOCK",
                     "http://52.175.72.85:9666",
