@@ -250,13 +250,13 @@
             android:layout_width="18dp"
             android:layout_height="18dp"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_mine_help_center" />
+            android:src="@drawable/ic_github" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="官方网站"
+            android:text="@string/mine_github"
             android:textColor="@color/mine_menu_text_color"
             android:textSize="13sp" />
     </LinearLayout>
@@ -273,17 +273,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:layout_marginLeft="16dp"
-            android:src="@drawable/ic_mine_about_us" />
-
         <TextView
             android:id="@+id/tv_version_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="11dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/mine_version"
             android:textColor="@color/mine_menu_text_color"
             android:textSize="13sp" />
