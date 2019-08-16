@@ -36,6 +36,7 @@
     <string name="mine_personal_center">个人中心</string>
     <string name="mine_help_center">技术交流与帮助</string>
     <string name="mine_about_us">关于我们</string>
+    <string name="mine_version">版本号：</string>
 
     <string name="add_new_property_title">添加新资产</string>
     <string name="search_toolbar_cancel">取消</string>

@@ -38,7 +38,7 @@
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.spockchain.wallet.ui.activity.MainActivity"
-            android:screenOrientation="portrait"></activity>Î
+            android:screenOrientation="portrait"></activity>
 
         <activity android:name="com.spockchain.wallet.ui.activity.QRCodeScannerActivity" />
         <activity android:name="com.spockchain.wallet.ui.activity.CreateWalletActivity" />

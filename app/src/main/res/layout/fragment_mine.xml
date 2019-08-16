@@ -280,10 +280,11 @@
             android:src="@drawable/ic_mine_about_us" />
 
         <TextView
+            android:id="@+id/tv_version_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="11dp"
-            android:text="版本号：v2.0.1"
+            android:text="@string/mine_version"
             android:textColor="@color/mine_menu_text_color"
             android:textSize="13sp" />
     </LinearLayout>
