@@ -91,8 +91,7 @@ public class TransactionsViewModel extends BaseViewModel {
         progress.postValue(true);
 
         fetchTransactionsInteract
-//                .fetch(defaultWallet.getValue().address, 0)
-                .fetch("SPOCK-a42cef92628b827090dd3d268ab32335f834cb76", 0)
+                .fetch(defaultWallet.getValue().address, 0)
                 .subscribe(this::onFirstPageTransactions, this::onError);
 
 //        transactionDisposable = Observable.interval(0, FETCH_TRANSACTIONS_INTERVAL, TimeUnit.MINUTES)
