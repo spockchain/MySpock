@@ -3,6 +3,7 @@ package com.spockchain.wallet.viewmodel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 
+import com.google.common.collect.Lists;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.entity.NetworkInfo;
 import com.spockchain.wallet.entity.TransactionMetadata;
@@ -90,8 +91,9 @@ public class TransactionsViewModel extends BaseViewModel {
         progress.postValue(true);
 
         fetchTransactionsInteract
-                .fetch(defaultWallet.getValue().address, 0)
-                .subscribe(this::onTransactions, this::onError);
+//                .fetch(defaultWallet.getValue().address, 0)
+                .fetch("SPOCK-a42cef92628b827090dd3d268ab32335f834cb76", 0)
+                .subscribe(this::onFirstPageTransactions, this::onError);
 
 //        transactionDisposable = Observable.interval(0, FETCH_TRANSACTIONS_INTERVAL, TimeUnit.MINUTES)
 //            .doOnNext(l ->
@@ -130,6 +132,12 @@ public class TransactionsViewModel extends BaseViewModel {
         defaultWallet.setValue(wallet);
 //        getBalance();
         fetchTransactions();
+    }
+
+    private void onFirstPageTransactions(TransactionMetadata[] transactions) {
+        progress.postValue(false);
+        hasMoreTransactions.postValue(transactions.length >= TRANSACTIONS_PER_PAGE);
+        this.transactions.postValue(Arrays.asList(transactions));
     }
 
     private void onTransactions(TransactionMetadata[] transactions) {

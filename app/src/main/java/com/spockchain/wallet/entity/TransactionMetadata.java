@@ -24,7 +24,7 @@ public class TransactionMetadata {
     }
 
     public TransactionMetadata(List<String> webResponse) {
-        this(webResponse.get(0), webResponse.get(2), webResponse.get(3), webResponse.get(1), Long.parseLong(webResponse.get(6)));
+        this(webResponse.get(0), webResponse.get(2), webResponse.get(3), webResponse.get(4), Long.parseLong(webResponse.get(6)));
     }
 
     public String getHash() {

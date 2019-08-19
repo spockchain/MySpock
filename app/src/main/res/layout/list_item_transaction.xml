@@ -60,6 +60,7 @@
             android:id="@+id/value"
             android:textSize="15sp"
             android:textColor="@color/colorAccent"
+            android:layout_marginTop="@dimen/small_margin"
             android:layout_marginEnd="@dimen/big_margin"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
