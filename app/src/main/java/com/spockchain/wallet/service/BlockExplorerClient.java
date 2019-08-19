@@ -2,10 +2,13 @@ package com.spockchain.wallet.service;
 
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.spockchain.wallet.entity.NetworkInfo;
 import com.spockchain.wallet.entity.Transaction;
+import com.spockchain.wallet.entity.TransactionMetadata;
 import com.spockchain.wallet.repository.EthereumNetworkRepository;
-import com.google.gson.Gson;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOperator;
@@ -18,7 +21,9 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public class BlockExplorerClient implements BlockExplorerClientType {
@@ -69,6 +74,22 @@ public class BlockExplorerClient implements BlockExplorerClientType {
 
 	}
 
+	@Override
+	public Observable<TransactionMetadata[]> fetchTransactions(FetchTransactionsRequestBody body) {
+		return transactionsApiClient
+				.fetchTransactions(body)
+				.lift(apiError(gson))
+				.map(r -> {
+					TransactionMetadata[] transactions = new TransactionMetadata[r.getData().size()];
+ 					int index = 0;
+					for (List<String> t : r.getData()) {
+						transactions[index++] = new TransactionMetadata(t);
+					}
+					return transactions;
+				})
+				.subscribeOn(Schedulers.io());
+	}
+
 	private void onNetworkChanged(NetworkInfo networkInfo) {
 		buildApiClient(networkInfo.backendUrl);
 	}
@@ -85,9 +106,13 @@ public class BlockExplorerClient implements BlockExplorerClientType {
         Observable<Response<EtherScanResponse>> fetchTransactions(
                 @Query("address") String address, @Query("filterContractInteraction") boolean filter);
 
-    @GET("/transactions?limit=50")
-    Observable<Response<EtherScanResponse>> fetchTransactions(
-            @Query("address") String address, @Query("contract") String contract);
+		@GET("/transactions?limit=50")
+		Observable<Response<EtherScanResponse>> fetchTransactions(
+				@Query("address") String address, @Query("contract") String contract);
+
+
+		@POST("addr")
+		Observable<Response<FetchTransactionsResponse>> fetchTransactions(@Body FetchTransactionsRequestBody body);
 	}
 
 	private final static class EtherScanResponse {

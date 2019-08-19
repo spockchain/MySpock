@@ -2,12 +2,10 @@ package com.spockchain.wallet.viewmodel;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.text.TextUtils;
-
 
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.entity.NetworkInfo;
-import com.spockchain.wallet.entity.Transaction;
+import com.spockchain.wallet.entity.TransactionMetadata;
 import com.spockchain.wallet.interact.FetchTransactionsInteract;
 import com.spockchain.wallet.interact.FetchWalletInteract;
 import com.spockchain.wallet.repository.EthereumNetworkRepository;
@@ -17,17 +15,25 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
-import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
+
+import static com.spockchain.wallet.repository.TransactionRepository.TRANSACTIONS_PER_PAGE;
 
 public class TransactionsViewModel extends BaseViewModel {
     private static final long FETCH_TRANSACTIONS_INTERVAL = 1;
     private final MutableLiveData<NetworkInfo> defaultNetwork = new MutableLiveData<>();
     private final MutableLiveData<ETHWallet> defaultWallet = new MutableLiveData<>();
-    private final MutableLiveData<List<Transaction>> transactions = new MutableLiveData<>();
+    private final MutableLiveData<List<TransactionMetadata>> transactions = new MutableLiveData<>();
     private final MutableLiveData<Map<String, String>> defaultWalletBalance = new MutableLiveData<>();
+
+    private int pageIndex = 0;
+
+    public MutableLiveData<Boolean> getHasMoreTransactions() {
+        return hasMoreTransactions;
+    }
+
+    private final MutableLiveData<Boolean> hasMoreTransactions = new MutableLiveData<>();
 
     private final EthereumNetworkRepository ethereumNetworkRepository;
     private final FetchWalletInteract findDefaultWalletInteract;
@@ -50,7 +56,9 @@ public class TransactionsViewModel extends BaseViewModel {
     protected void onCleared() {
         super.onCleared();
 
-        transactionDisposable.dispose();
+        if (transactionDisposable != null) {
+            transactionDisposable.dispose();
+        }
 //        balanceDisposable.dispose();
     }
 
@@ -62,7 +70,7 @@ public class TransactionsViewModel extends BaseViewModel {
         return defaultWallet;
     }
 
-    public LiveData<List<Transaction>> transactions() {
+    public LiveData<List<TransactionMetadata>> transactions() {
         return transactions;
     }
 
@@ -80,12 +88,26 @@ public class TransactionsViewModel extends BaseViewModel {
 
     public void fetchTransactions() {
         progress.postValue(true);
-        transactionDisposable = Observable.interval(0, FETCH_TRANSACTIONS_INTERVAL, TimeUnit.MINUTES)
-            .doOnNext(l ->
-                disposable = fetchTransactionsInteract
-                        .fetch(defaultWallet.getValue().address,  this.tokenAddr )
-                        .subscribe(this::onTransactions, this::onError))
-            .subscribe();
+
+        fetchTransactionsInteract
+                .fetch(defaultWallet.getValue().address, 0)
+                .subscribe(this::onTransactions, this::onError);
+
+//        transactionDisposable = Observable.interval(0, FETCH_TRANSACTIONS_INTERVAL, TimeUnit.MINUTES)
+//            .doOnNext(l ->
+//                disposable = fetchTransactionsInteract
+////                        .fetch(defaultWallet.getValue().address, 0)
+//                        .fetch("SPOCK-bbb97b57213c2aa4ea7b29a600bbbae77461a844", 0)
+//                        .subscribe(this::onTransactions, this::onError))
+//            .subscribe();
+    }
+
+    public void fetchNextPageTransactions() {
+        progress.postValue(true);
+
+        fetchTransactionsInteract
+                .fetch(defaultWallet.getValue().address, ++pageIndex)
+                .subscribe(this::onTransactions, this::onError);
     }
 
     public void getBalance() {
@@ -110,22 +132,30 @@ public class TransactionsViewModel extends BaseViewModel {
         fetchTransactions();
     }
 
-    private void onTransactions(Transaction[] transactions) {
+    private void onTransactions(TransactionMetadata[] transactions) {
         progress.postValue(false);
+        hasMoreTransactions.postValue(transactions.length >= TRANSACTIONS_PER_PAGE);
 
-        // ETH transfer ingore the contract call
-        if (TextUtils.isEmpty(tokenAddr)) {
-            ArrayList<Transaction> transactionList = new ArrayList<>();
-            LogUtils.d("size:" + transactionList.size());
-            for (Transaction t: transactions) {
-                if (t.operations == null || t.operations.length == 0) {
-                    transactionList.add(t);
-                }
-            }
-            this.transactions.postValue(transactionList);
-        } else {
-            this.transactions.postValue(Arrays.asList(transactions));
+        List<TransactionMetadata> currentList = this.transactions.getValue();
+        if (currentList == null) {
+            currentList = new ArrayList<>();
         }
+        currentList.addAll(Arrays.asList(transactions));
+        this.transactions.postValue(currentList);
+
+//        // ETH transfer ignores the contract call
+//        if (TextUtils.isEmpty(tokenAddr)) {
+//            ArrayList<Transaction> transactionList = new ArrayList<>();
+//            LogUtils.d("transactions size:" + transactionList.size());
+//            for (TransactionMetadata t : transactions) {
+//                if (t.operations == null || t.operations.length == 0) {
+//                    transactionList.add(t);
+//                }
+//            }
+//            this.transactions.postValue(transactionList);
+//        } else {
+//            this.transactions.postValue(Arrays.asList(transactions));
+//        }
 
 
     }

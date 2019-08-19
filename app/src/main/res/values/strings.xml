@@ -71,6 +71,7 @@
 
     <string name="wallet_manager_create_wallet">创建钱包</string>
     <string name="wallet_manager_load_wallet">导入钱包</string>
+    <string name="load_more">加载更多</string>
 
     <string name="news_center_all_read">全部已读</string>
     <string name="news_center_title">消息中心</string>

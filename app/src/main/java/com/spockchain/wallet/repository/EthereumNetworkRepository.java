@@ -2,13 +2,12 @@ package com.spockchain.wallet.repository;
 
 import android.text.TextUtils;
 
+import com.spockchain.wallet.C;
+import com.spockchain.wallet.entity.NetworkInfo;
 
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
-
-import com.spockchain.wallet.C;
-import com.spockchain.wallet.entity.NetworkInfo;
 
 import java.math.BigInteger;
 import java.util.HashSet;
@@ -29,7 +28,7 @@ public class EthereumNetworkRepository  {
     private final NetworkInfo[] NETWORKS = new NetworkInfo[] {
             new NetworkInfo(C.SPOCK_MAIN_NETWORK_NAME, "SPOCK",
                     "http://39.105.230.38:9666",
-                    "http://www.spock.network",
+                    "http://www.spock.network/",
                     null,234234234, false),
             new NetworkInfo(C.SPOCK_TEST_NETWORK_NAME, "SPOCK",
                     "http://52.175.72.85:9666",
