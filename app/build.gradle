@@ -129,7 +129,6 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.3.6'
 
     implementation 'pub.devrel:easypermissions:1.0.1'
-
 }
 
 greendao {

@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class Transaction implements Parcelable {
     @SerializedName("id")
@@ -53,6 +54,42 @@ public class Transaction implements Parcelable {
         this.gasUsed = gasUsed;
         this.operations = operations;
         this.contract = contract;
+    }
+
+    /**
+     * Creates a transaction from spock.network response.
+     */
+    public Transaction(List<String> data) {
+        this(data.get(0),
+                null,
+                data.get(1),
+                Long.parseLong(data.get(6)),
+                0, data.get(2),
+                data.get(3),
+                data.get(4),
+                null,
+                null,
+                null,
+                data.get(5),
+                null,
+                null);
+    }
+
+    public Transaction(org.web3j.protocol.core.methods.response.Transaction t) {
+        this(t.getHash(),
+                null,
+                t.getBlockNumber().toString(),
+                Long.parseLong(t.getCreates()),
+                t.getNonce().intValue(),
+                t.getFrom(),
+                t.getTo(),
+                t.getValueRaw(),
+                t.getGasRaw(),
+                t.getGasPriceRaw(),
+                t.getInput(),
+                "123",
+                null,
+                null);
     }
 
     protected Transaction(Parcel in) {

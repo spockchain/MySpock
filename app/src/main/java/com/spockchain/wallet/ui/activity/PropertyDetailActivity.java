@@ -2,37 +2,37 @@ package com.spockchain.wallet.ui.activity;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.gyf.barlibrary.ImmersionBar;
 import com.spockchain.wallet.C;
 import com.spockchain.wallet.R;
 import com.spockchain.wallet.base.BaseActivity;
 import com.spockchain.wallet.domain.ETHWallet;
-import com.spockchain.wallet.entity.Transaction;
+import com.spockchain.wallet.entity.TransactionMetadata;
 import com.spockchain.wallet.ui.adapter.TransactionsAdapter;
 import com.spockchain.wallet.utils.LogUtils;
 import com.spockchain.wallet.utils.WalletDaoUtils;
 import com.spockchain.wallet.viewmodel.TransactionsViewModel;
 import com.spockchain.wallet.viewmodel.TransactionsViewModelFactory;
-import com.gyf.barlibrary.ImmersionBar;
 
-import java.util.Arrays;
 import java.util.List;
-
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
 import static com.spockchain.wallet.C.EXTRA_ADDRESS;
-import static com.spockchain.wallet.C.Key.TRANSACTION;
 
 /**
  * Created by Tiny 熊 @ Upchain.pro
@@ -62,7 +62,13 @@ public class PropertyDetailActivity extends BaseActivity {
     @BindView(R.id.tv_amount)
     TextView tvAmount;
 
-    List<Transaction> transactionLists;
+    @BindView(R.id.btn_load_more)
+    Button btnLoadMore;
+
+    @BindView(R.id.lly_load_more)
+    View llyLoadMore;
+
+    List<TransactionMetadata> transactionLists;
 
 
     @Override
@@ -102,7 +108,6 @@ public class PropertyDetailActivity extends BaseActivity {
 
         viewModel.transactions().observe(this, this::onTransactions);
         viewModel.progress().observe(this, this::onProgress);
-
     }
 
     @Override
@@ -121,7 +126,7 @@ public class PropertyDetailActivity extends BaseActivity {
 
 
 
-    private void onTransactions(List<Transaction> transactions) {
+    private void onTransactions(List<TransactionMetadata> transactions) {
         LogUtils.d("onTransactions", "size: " + transactions.size());
         transactionLists = transactions;
         adapter.addTransactions(transactionLists, currWallet, symbol);
@@ -139,36 +144,46 @@ public class PropertyDetailActivity extends BaseActivity {
 
         list.setLayoutManager(new LinearLayoutManager(this));
 
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,1);
+        list.addItemDecoration(dividerItemDecoration);
 
         adapter = new TransactionsAdapter(R.layout.list_item_transaction, null );
         list.setAdapter(adapter);
 
         adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
-            Transaction t = transactionLists.get(position);
+            TransactionMetadata t = transactionLists.get(position);
 
-            Intent intent = new Intent(this, TransactionDetailActivity.class);
-            intent.putExtra(TRANSACTION, t);
+            Uri uri = Uri.parse(viewModel.defaultNetwork().getValue().backendUrl + "tx/" + t.getHash());
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
         });
 
         refreshLayout.setOnRefreshListener(viewModel::fetchTransactions);
         // TODO(satoshi.meow): Enable the refresh after we support fetching transaction.
-        refreshLayout.setEnabled(false);
+//        refreshLayout.setEnabled(false);
+
+        viewModel.getHasMoreTransactions().observe(this, this::hasMoreTransactions);
     }
 
 
-    private void onProgress(boolean shouldShow) {
-        if (shouldShow && refreshLayout != null && refreshLayout.isRefreshing()) {
+    private void onProgress(boolean inProgress) {
+        if (inProgress && refreshLayout != null && refreshLayout.isRefreshing()) {
             return;
         }
 
-        if (!shouldShow) {
+        if (!inProgress) {
             refreshLayout.setRefreshing(false);
         }
+
+        setLoadMoreButtonVisibility();
+    }
+
+    private void hasMoreTransactions(boolean hasMore) {
+        setLoadMoreButtonVisibility();
     }
 
 
-    @OnClick({R.id.lly_back, R.id.lly_transfer, R.id.lly_gathering})
+    @OnClick({R.id.lly_back, R.id.lly_transfer, R.id.lly_gathering, R.id.btn_load_more})
     public void onClick(View view) {
         Intent intent = null;
         switch (view.getId()) {
@@ -198,6 +213,16 @@ public class PropertyDetailActivity extends BaseActivity {
 
                 startActivity(intent);
                 break;
+            case R.id.btn_load_more:
+                viewModel.fetchNextPageTransactions();
+                break;
         }
+    }
+
+    void setLoadMoreButtonVisibility() {
+        boolean isInProgress = viewModel.progress().getValue() == null ? false : viewModel.progress().getValue();
+        boolean hasMoreData = viewModel.getHasMoreTransactions().getValue() == null ? false : viewModel.getHasMoreTransactions().getValue();
+
+        llyLoadMore.setVisibility(!isInProgress && hasMoreData ? View.VISIBLE : View.GONE);
     }
 }

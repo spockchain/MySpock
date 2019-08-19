@@ -5,6 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     >
 
+    <LinearLayout
+        android:id="@+id/loading_view"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        >
+    </LinearLayout>
+
     <include layout="@layout/common_toolbar" />
 
     <ScrollView

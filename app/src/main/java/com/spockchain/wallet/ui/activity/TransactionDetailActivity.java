@@ -1,8 +1,8 @@
 package com.spockchain.wallet.ui.activity;
 
 import android.arch.lifecycle.ViewModelProviders;
-import android.support.v4.content.ContextCompat;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.View;
@@ -103,7 +103,6 @@ public class TransactionDetailActivity extends BaseActivity implements View.OnCl
                 .get(TransactionDetailViewModel.class);
         viewModel.defaultNetwork().observe(this, this::onDefaultNetwork);
         viewModel.defaultWallet().observe(this, this::onDefaultWallet);
-
     }
 
 

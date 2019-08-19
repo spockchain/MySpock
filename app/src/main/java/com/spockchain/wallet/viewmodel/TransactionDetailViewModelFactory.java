@@ -20,6 +20,7 @@ public class TransactionDetailViewModelFactory implements ViewModelProvider.Fact
 
         this.EthereumNetworkRepository = rf.ethereumNetworkRepository;
         this.findDefaultWalletInteract = new FetchWalletInteract();
+
     }
 
     @NonNull

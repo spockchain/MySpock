@@ -3,7 +3,6 @@ package com.spockchain.wallet.ui.fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,7 +11,6 @@ import com.spockchain.wallet.R;
 import com.spockchain.wallet.base.BaseFragment;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.CreateWalletInteract;
-import com.spockchain.wallet.utils.ETHWalletUtils;
 import com.spockchain.wallet.utils.ToastUtils;
 
 import butterknife.BindView;
@@ -97,7 +95,7 @@ public class ImportPrivateKeyFragment extends BaseFragment {
             ToastUtils.showToast(R.string.create_wallet_pwd_input_tips);
             // 同时判断强弱
             return false;
-        } else if (ETHWalletUtils.isTooSimplePrivateKey(walletPwd)) {
+        } else if (walletPwd.length() < 9) {
             ToastUtils.showToast(R.string.load_wallet_by_private_key_wallet_pwd_too_short);
             return false;
         } else if (TextUtils.isEmpty(confirmPwd) || !TextUtils.equals(confirmPwd, walletPwd)) {
