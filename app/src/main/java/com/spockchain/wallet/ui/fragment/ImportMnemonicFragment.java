@@ -18,6 +18,9 @@ import com.spockchain.wallet.utils.ToastUtils;
 import com.spockchain.wallet.utils.UUi;
 import com.spockchain.wallet.utils.WalletDaoUtils;
 import com.spockchain.wallet.view.LoadWalletSelectStandardPopupWindow;
+import com.tencent.stat.StatService;
+
+import java.util.Properties;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -102,6 +105,9 @@ public class ImportMnemonicFragment extends BaseFragment {
     }
 
     public void loadSuccess(ETHWallet wallet) {
+        Properties prop = new Properties();
+        prop.setProperty("method", "mnemonic");
+        StatService.trackCustomKVEvent(getContext(), "importWalletSuccess", prop);
 
         dismissDialog();
         ToastUtils.showToast("导入钱包成功");
@@ -127,6 +133,7 @@ public class ImportMnemonicFragment extends BaseFragment {
                 boolean verifyWalletInfo = verifyInfo(mnemonic, name, walletPwd, pwdReminder);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.loading_wallet_tip));
+                    logEvent();
                     createWalletInteract.loadWalletByMnemonic(ethType, mnemonic, walletPwd, name).subscribe(this::loadSuccess, this::onError);
                 }
                 break;
@@ -152,6 +159,12 @@ public class ImportMnemonicFragment extends BaseFragment {
             return false;
         }
         return true;
+    }
+
+    private void logEvent() {
+        Properties prop = new Properties();
+        prop.setProperty("method", "mnemonic");
+        StatService.trackCustomKVEvent(getContext(), "importWalletStart", prop);
     }
 
 }

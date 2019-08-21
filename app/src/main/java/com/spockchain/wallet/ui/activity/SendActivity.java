@@ -36,6 +36,7 @@ import com.spockchain.wallet.view.ConfirmTransactionView;
 import com.spockchain.wallet.view.InputPwdView;
 import com.spockchain.wallet.viewmodel.ConfirmationViewModel;
 import com.spockchain.wallet.viewmodel.ConfirmationViewModelFactory;
+import com.tencent.stat.StatService;
 
 import org.web3j.utils.Convert;
 
@@ -43,6 +44,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.Properties;
 
 
 import butterknife.BindView;
@@ -178,7 +180,14 @@ public class SendActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        StatService.onResume(this);
         viewModel.prepare(this, sendingTokens? ConfirmationType.ETH: ConfirmationType.ERC20);
+    }
+
+    @Override
+    protected void onPause() {
+        StatService.onPause(this);
+        super.onPause();
     }
 
     @Override
@@ -371,6 +380,7 @@ public class SendActivity extends BaseActivity {
                                 Convert.toWei(amountText.getText().toString().trim(), Convert.Unit.ETHER).toBigInteger(),
                                 gasPrice,
                                 gasLimit );
+                        logStartEvent();
                     }
                 });
 
@@ -382,6 +392,16 @@ public class SendActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    private void logStartEvent() {
+        Properties prop = new Properties();
+        StatService.trackCustomKVEvent(this, "sendMoneyStart", prop);
+    }
+
+    private void logSuccessEvent() {
+        Properties prop = new Properties();
+        StatService.trackCustomKVEvent(this, "sendMoneySuccess", prop);
     }
 
 
@@ -425,6 +445,7 @@ public class SendActivity extends BaseActivity {
                 })
                 .create();
         dialog.show();
+        logSuccessEvent();
     }
 
     private void fillAddress(String addr) {

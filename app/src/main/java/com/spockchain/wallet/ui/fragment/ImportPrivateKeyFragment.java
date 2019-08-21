@@ -12,6 +12,9 @@ import com.spockchain.wallet.base.BaseFragment;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.CreateWalletInteract;
 import com.spockchain.wallet.utils.ToastUtils;
+import com.tencent.stat.StatService;
+
+import java.util.Properties;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -78,10 +81,17 @@ public class ImportPrivateKeyFragment extends BaseFragment {
                 boolean verifyWalletInfo = verifyInfo(privateKey, name, walletPwd, confirmPwd, pwdReminder);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.loading_wallet_tip));
+                    logEvent();
                     createWalletInteract.loadWalletByPrivateKey(privateKey, walletPwd, name).subscribe(this::loadSuccess, this::onError);
                 }
                 break;
         }
+    }
+
+    private void logEvent() {
+        Properties prop = new Properties();
+        prop.setProperty("method", "private key");
+        StatService.trackCustomKVEvent(getContext(), "importWalletStart", prop);
     }
 
     private boolean verifyInfo(String privateKey, String name, String walletPwd, String confirmPwd, String pwdReminder) {
@@ -106,6 +116,10 @@ public class ImportPrivateKeyFragment extends BaseFragment {
     }
 
     public void loadSuccess(ETHWallet wallet) {
+        Properties prop = new Properties();
+        prop.setProperty("method", "private key");
+        StatService.trackCustomKVEvent(getContext(), "importWalletSuccess", prop);
+
         ToastUtils.showToast("导入钱包成功");
         dismissDialog();
 
