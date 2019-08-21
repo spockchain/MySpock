@@ -14,6 +14,9 @@ import com.spockchain.wallet.utils.LogInterceptor;
 import com.google.gson.Gson;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tencent.stat.StatConfig;
+import com.tencent.stat.StatCrashReporter;
+import com.tencent.stat.StatService;
 
 import io.realm.Realm;
 import okhttp3.OkHttpClient;
@@ -56,6 +59,12 @@ public class MySpockApp extends MultiDexApplication {
 
         AppFilePath.init(this);
 
+        // [可选]设置是否打开debug输出，上线时请关闭，Logcat标签为"MtaSDK"
+        StatConfig.setDebugEnable(false);
+        // 基础统计API
+        StatService.registerActivityLifecycleCallbacks(this);
+        // Crash report
+        StatCrashReporter.getStatCrashReporter(getApplicationContext()).setJavaCrashHandlerStatus(true);
     }
 
 
