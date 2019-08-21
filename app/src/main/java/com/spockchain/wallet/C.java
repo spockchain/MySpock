@@ -31,6 +31,8 @@ public abstract class C {
     public static final String ETC_SYMBOL = "ETC";
     public static final String SPOCK_SYMBOL = "SPOCK";
 
+    public static final String SPOCK_UNIT = "Spok";
+
     public static final String GWEI_UNIT = "Gwei";
 
     public static final String EXTRA_ADDRESS = "ADDRESS";

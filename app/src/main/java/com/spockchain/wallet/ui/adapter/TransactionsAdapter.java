@@ -6,6 +6,7 @@ import android.text.format.DateUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.spockchain.wallet.C;
 import com.spockchain.wallet.R;
 import com.spockchain.wallet.entity.Transaction;
 import com.spockchain.wallet.entity.TransactionMetadata;
@@ -87,23 +88,24 @@ public class TransactionsAdapter  extends BaseQuickAdapter<TransactionMetadata, 
 //                || transaction.operations.length == 0 ? null : transaction.operations[0];
 
         TransactionOperation operation = null;
+        String unit = symbol == C.SPOCK_SYMBOL ? C.SPOCK_UNIT : symbol;
 
         if (operation == null || operation.contract == null) {  // default to ether transaction
             valueStr = transaction.getValue();
 
             if (valueStr.equals("0")) {
-                valueStr = "0 " + symbol;
+                valueStr = "0 " + unit;
             } else {
-                valueStr = (isSent ? "-" : "+") +  valueStr + " " + symbol;
+                valueStr = (isSent ? "-" : "+") +  valueStr + " " + unit;
             }
 
         } else {
             valueStr = operation.value;
 
             if (valueStr.equals("0")) {
-                valueStr = "0 " + symbol;
+                valueStr = "0 " + unit;
             } else {
-                valueStr = (isSent ? "-" : "+") +  getScaledValue(valueStr, operation.contract.decimals) + " " + symbol;
+                valueStr = (isSent ? "-" : "+") +  getScaledValue(valueStr, operation.contract.decimals) + " " + unit;
             }
         }
         helper.setText(R.id.value, "数额: " + valueStr);

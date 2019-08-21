@@ -209,7 +209,7 @@ public class SendActivity extends BaseActivity {
         gasformater.setRoundingMode(RoundingMode.CEILING);
 
 
-        final String etherUnit = getString(R.string.transfer_ether_unit);
+        final String etherUnit = C.SPOCK_UNIT;
 
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
