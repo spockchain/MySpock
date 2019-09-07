@@ -262,11 +262,10 @@
     <string name="welcome_erc20_label_title">兼容 ERC20 </string>
     <string name="welcome_erc20_label_description">支持所有的ERC20 代币</string>
 
-    <string name="ask_help_desc_1">登链钱包是一款免费开源的功能全面的以太坊钱包，希望对你有帮助。 \n\n欢迎大家一起来交流技术QQ群：245251041， 个人微信：xlbxiong （下方是二维码）
-        \n\n如果你需要寻求进一步的帮助，我们提供的实惠的有偿技术服务，如：
-        \n1. 专业团队提供钱包定制开发；
-        \n2. 关注"登链学院"同名公众号全面学习区块链开发课程；
-        \n3. 解答问题，加入知识星球： 深入浅出区块链问答社区。 </string>
 
-
+    <!--Transaction List-->
+    <string name="transaction_list_from">发送: %s</string>
+    <string name="transaction_list_to">接受: %s</string>
+    <string name="transaction_list_time">时间: %s</string>
+    <string name="transaction_list_Amount">数额: %s</string>
 </resources>
