@@ -95,7 +95,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginTop="21dp"
             android:background="@null"
-            android:hint="@string/create_wallet_pwd_hint"
+            android:hint="@string/load_wallet_by_mnemonic_password_hint"
             android:inputType="textPassword"
             android:maxLength="16"
             android:textColor="@color/discovery_application_item_name_color"

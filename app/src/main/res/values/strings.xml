@@ -137,6 +137,7 @@
     <string name="load_wallet_indicator_observer">观察</string>
 
     <string name="load_wallet_by_mnemonic_hint">Mnemonic phrase, delimited by space.</string>
+    <string name="load_wallet_by_mnemonic_password_hint">Password (must be same as the desktop wallet one)</string>
     <string name="load_wallet_by_mnemonic_input_tip">Please double check the mnemonic phrase.</string>
     <string name="load_wallet_by_mnemonic_standard">m/44\'/60\'/0\'/0/0</string>
     <string name="load_wallet_by_mnemonic_standard_ledger">m/44\'/60\'/0\'/0</string>
