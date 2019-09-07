@@ -49,9 +49,9 @@ public class TransactionsAdapter  extends BaseQuickAdapter<TransactionMetadata, 
         boolean isSent = transaction.getFrom().toLowerCase().equals(defaultAddress.toLowerCase());
 //        boolean isCreateContract = TextUtils.isEmpty(transaction.getTo());
 
-        helper.setText(R.id.from, "发送: " + transaction.getFrom());
-        helper.setText(R.id.to, "接受: " + transaction.getTo());
-        helper.setText(R.id.created, "时间: " + convertTimestampToDate(transaction.getTimestamp()));
+        helper.setText(R.id.from,  mContext.getString(R.string.transaction_list_from, transaction.getFrom()));
+        helper.setText(R.id.to, mContext.getString(R.string.transaction_list_to, transaction.getTo()));
+        helper.setText(R.id.created, mContext.getString(R.string.transaction_list_time, convertTimestampToDate(transaction.getTimestamp())));
 
 //        if (isSent) {
 //            if (isCreateContract) {
@@ -108,7 +108,7 @@ public class TransactionsAdapter  extends BaseQuickAdapter<TransactionMetadata, 
                 valueStr = (isSent ? "-" : "+") +  getScaledValue(valueStr, operation.contract.decimals) + " " + unit;
             }
         }
-        helper.setText(R.id.value, "数额: " + valueStr);
+        helper.setText(R.id.value, mContext.getString(R.string.transaction_list_Amount, valueStr));
     }
 
 

@@ -12,15 +12,6 @@
         android:layout_height="1dp"
         android:background="@color/item_divider_bg_color" />
 
-
-    <TextView
-        android:layout_marginTop="8dp"
-        android:padding="8dp"
-        android:text="@string/ask_help_desc_1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
-
     <ImageView
         android:layout_gravity="center"
         android:layout_width="wrap_content"
