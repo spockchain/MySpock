@@ -135,7 +135,7 @@
     <string name="load_wallet_indicator_observer">观察</string>
 
     <string name="load_wallet_by_mnemonic_hint">助记词，按空格分隔</string>
-    <string name="load_wallet_by_mnemonic_password_hint">密码 (必须和桌面钱包的一致)</string>
+    <string name="load_wallet_by_mnemonic_password_hint">密码 (必须和使用桌面钱包生成此账号时所用的密码一致)</string>
     <string name="load_wallet_by_mnemonic_input_tip">请检查您的助记词</string>
     <string name="load_wallet_by_mnemonic_standard">m/44\'/60\'/0\'/0/0</string>
     <string name="load_wallet_by_mnemonic_standard_ledger">m/44\'/60\'/0\'/0</string>
