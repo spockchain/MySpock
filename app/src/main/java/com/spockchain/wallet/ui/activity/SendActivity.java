@@ -294,6 +294,9 @@ public class SendActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (s.toString().trim().isEmpty()) {
+                    return;
+                }
                 gasLimit = new BigInteger(s.toString());
 
                 updateNetworkFee();
