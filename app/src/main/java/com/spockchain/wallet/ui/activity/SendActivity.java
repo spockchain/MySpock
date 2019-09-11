@@ -13,6 +13,7 @@ import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -59,6 +60,7 @@ import static com.spockchain.wallet.C.SPCOK_CHAIN_NAME;
 
 
 public class SendActivity extends BaseActivity {
+    private static final String TAG = "SendActivity";
 
     ConfirmationViewModelFactory confirmationViewModelFactory;
     ConfirmationViewModel viewModel;
@@ -113,8 +115,8 @@ public class SendActivity extends BaseActivity {
     private String symbol;
 
     private String netCost;
-    private  BigInteger gasPrice;
-    private BigInteger gasLimit;
+    private BigInteger gasPriceInWei;
+    private BigInteger gasLimit = new BigInteger("144000");
 
 
     private boolean sendingTokens = false;
@@ -157,9 +159,9 @@ public class SendActivity extends BaseActivity {
 
         decimals = intent.getIntExtra(C.EXTRA_DECIMALS, C.ETHER_DECIMALS);
         symbol = intent.getStringExtra(C.EXTRA_SYMBOL);
-        symbol = symbol == null ? C.ETH_SYMBOL : symbol;
+        symbol = symbol == null ? C.SPOCK_SYMBOL : symbol;
 
-        tvTitle.setText(symbol + getString(R.string.transfer_title));
+        tvTitle.setText(symbol + " " + getString(R.string.transfer_title));
 
         confirmationViewModelFactory = new ConfirmationViewModelFactory();
         viewModel = ViewModelProviders.of(this, confirmationViewModelFactory)
@@ -192,6 +194,8 @@ public class SendActivity extends BaseActivity {
 
     @Override
     public void configViews() {
+        customGasLimit.setText(gasLimit.toString());
+
         advancedSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -199,7 +203,7 @@ public class SendActivity extends BaseActivity {
                     llyAdvanceParam.setVisibility(View.VISIBLE);
                     llyGas.setVisibility(View.GONE);
 
-                    customGasPrice.setText(Convert.fromWei(new BigDecimal(gasPrice), Convert.Unit.GWEI).toString());
+                    customGasPrice.setText(Convert.fromWei(new BigDecimal(gasPriceInWei), Convert.Unit.GWEI).toString());
                     customGasLimit.setText(gasLimit.toString());
 
                 } else {
@@ -218,18 +222,19 @@ public class SendActivity extends BaseActivity {
         gasformater.setRoundingMode(RoundingMode.CEILING);
 
 
-        final String etherUnit = C.SPOCK_UNIT;
+        final String spockUnit = C.SPOCK_UNIT;
 
 
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                Log.d(TAG, "onProgressChanged!");
 
-                    double p = progress / 100f;
-                    double d = (miner_max - miner_min) * p + miner_min;
+                double p = progress / 100f;
+                double d = (miner_max - miner_min) * p + miner_min;
 
-                   gasPrice = BalanceUtils.gweiToWei(BigDecimal.valueOf(d));
-                   tvGasPrice.setText(gasformater.format(d) + " " + C.GWEI_UNIT);
+                gasPriceInWei = BalanceUtils.gweiToWei(BigDecimal.valueOf(d));
+                tvGasPrice.setText(gasformater.format(d) + " " + C.GWEI_UNIT);
 
                 updateNetworkFee();
             }
@@ -246,10 +251,7 @@ public class SendActivity extends BaseActivity {
         });
 
         seekbar.setProgress(10);
-        try {
-            netCost = BalanceUtils.weiToEth(gasPrice.multiply(gasLimit), 4) + etherUnit;
-        } catch (Exception e) {
-        }
+
 
         customGasPrice.addTextChangedListener(new TextWatcher() {
             @Override
@@ -267,10 +269,10 @@ public class SendActivity extends BaseActivity {
                 if (s.toString().trim().isEmpty()) {
                     return;
                 }
-                gasPrice = BalanceUtils.gweiToWei(new BigDecimal(s.toString()));
+                gasPriceInWei = BalanceUtils.gweiToWei(new BigDecimal(s.toString()));
 
                 try {
-                    netCost = BalanceUtils.weiToEth(gasPrice.multiply(gasLimit),  4) + etherUnit;
+                    netCost = BalanceUtils.weiToEth(gasPriceInWei.multiply(gasLimit),  4) + spockUnit;
                     tvGasCost.setText(String.valueOf(netCost ));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -297,12 +299,18 @@ public class SendActivity extends BaseActivity {
                 updateNetworkFee();
             }
         });
+
+        try {
+            netCost = BalanceUtils.weiToEth(gasPriceInWei.multiply(gasLimit), 4) + spockUnit;
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to calculate netCost", e);
+        }
     }
 
     private void updateNetworkFee() {
 
         try {
-            netCost = BalanceUtils.weiToEth(gasPrice.multiply(gasLimit),  4) + " " + C.ETH_SYMBOL;
+            netCost = BalanceUtils.weiToEth(gasPriceInWei.multiply(gasLimit),  4) + " " + C.SPOCK_UNIT;
             tvGasCost.setText(String.valueOf(netCost ));
         } catch (Exception e) {
             e.printStackTrace();
@@ -311,7 +319,7 @@ public class SendActivity extends BaseActivity {
 
 
     private void onGasSettings(GasSettings gasSettings) {
-        gasPrice = gasSettings.gasPrice;
+        gasPriceInWei = gasSettings.gasPrice;
         gasLimit = gasSettings.gasLimit;
 
     }
@@ -352,7 +360,8 @@ public class SendActivity extends BaseActivity {
 
                 if (verifyInfo(toAddr, amount)) {
                     ConfirmTransactionView confirmView = new ConfirmTransactionView(this, this::onClick);
-                    confirmView.fillInfo(walletAddr, toAddr, " - " + amount + " " +  symbol, netCost, gasPrice, gasLimit);
+                    Log.d(TAG, "Netcost is " + netCost);
+                    confirmView.fillInfo(walletAddr, toAddr, " - " + amount + " " +  C.SPOCK_UNIT, netCost, gasPriceInWei, gasLimit);
 
                     dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
                     dialog.setContentView(confirmView);
@@ -372,13 +381,13 @@ public class SendActivity extends BaseActivity {
                                 etTransferAddress.getText().toString().trim(),
                                 contractAddress,
                                 BalanceUtils.tokenToWei(new BigDecimal(amountText.getText().toString().trim()), decimals).toBigInteger(),
-                                gasPrice,
+                                gasPriceInWei,
                                 gasLimit
                         );
                     } else {
                         viewModel.createTransaction(pwd, etTransferAddress.getText().toString().trim(),
                                 Convert.toWei(amountText.getText().toString().trim(), Convert.Unit.ETHER).toBigInteger(),
-                                gasPrice,
+                                gasPriceInWei,
                                 gasLimit );
                         logStartEvent();
                     }

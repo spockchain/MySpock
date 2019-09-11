@@ -104,8 +104,6 @@
             android:id="@+id/text_gas_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/normal_margin"
-            android:layout_marginTop="@dimen/small_margin"
             android:textIsSelectable="true"
             android:textSize="12sp"
             android:textAppearance="?attr/textAppearanceListItemSmall" />
@@ -134,8 +132,6 @@
             android:id="@+id/text_gas_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/normal_margin"
-            android:layout_marginTop="@dimen/small_margin"
             android:textIsSelectable="true"
             android:textSize="12sp"
             android:textAppearance="?attr/textAppearanceListItemSmall" />

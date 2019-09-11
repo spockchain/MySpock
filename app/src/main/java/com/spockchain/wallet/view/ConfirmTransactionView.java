@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.spockchain.wallet.C;
 import com.spockchain.wallet.R;
+import com.spockchain.wallet.utils.BalanceUtils;
 
 import java.math.BigInteger;
 
@@ -21,25 +23,27 @@ public class ConfirmTransactionView extends FrameLayout {
     }
 
 
-    public void fillInfo(String fromAddr, String addr, String amount, String fee, BigInteger gasPrice, BigInteger gasLimit) {
+    public void fillInfo(String fromAddr, String addr, String amount, String fee, BigInteger gasPriceInWei, BigInteger gasLimit) {
 
 
-        TextView fromAddressText = (TextView)findViewById(R.id.text_from);
+        TextView fromAddressText = findViewById(R.id.text_from);
         fromAddressText.setText(fromAddr);
 
-        TextView toAddressText = (TextView)findViewById(R.id.text_to);
+        TextView toAddressText = findViewById(R.id.text_to);
         toAddressText.setText(addr);
 
-        TextView valueText = (TextView)findViewById(R.id.text_value);
+        TextView valueText = findViewById(R.id.text_value);
         valueText.setText(amount);
 
-        TextView gasPriceText = (TextView)findViewById(R.id.text_gas_price);
+        TextView gasPriceText = findViewById(R.id.text_gas_price);
+        String gasPriceInGwei = BalanceUtils.weiToGwei(gasPriceInWei);
+        gasPriceText.setText(String.format("%s %s", gasPriceInGwei, C.GWEI_UNIT));
 
-        TextView gasLimitText = (TextView)findViewById(R.id.text_gas_limit);
+        TextView gasLimitText = findViewById(R.id.text_gas_limit);
+        gasLimitText.setText(String.format(gasLimit.toString()));
 
-        TextView networkFeeText = (TextView)findViewById(R.id.text_network_fee);
+        TextView networkFeeText = findViewById(R.id.text_network_fee);
         networkFeeText.setText(fee);
-
 
     }
 

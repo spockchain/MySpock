@@ -106,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:text="0.00021 SPOK"
+            android:text="0.00021 Spok"
             android:textColor="@color/property_ico_worth_color"
             android:textSize="12sp" />
 
@@ -125,7 +125,7 @@
             android:id="@+id/seekbar"
             android:layout_width="330dp"
             android:layout_height="24dp"
-            android:progress="10"
+            android:progress="1"
             android:layout_marginTop="12dp" />
 
         <RelativeLayout
