@@ -53,7 +53,7 @@
     <string name="transfer_title_confirm">转账详情</string>
     <string name="transfer_title">转账</string>
     <string name="transfer_address">收款人钱包地址</string>
-    <string name="transfer_money">转账金额</string>
+    <string name="transfer_money">转账金额 (Spok)</string>
     <string name="transfer_remark">备注</string>
     <string name="transfer_gas_cost">矿工费用</string>
     <string name="transfer_gas_price">自定义 Gas Price</string>

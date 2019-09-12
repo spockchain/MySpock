@@ -272,7 +272,7 @@ public class SendActivity extends BaseActivity {
                 gasPriceInWei = BalanceUtils.gweiToWei(new BigDecimal(s.toString()));
 
                 try {
-                    netCost = BalanceUtils.weiToEth(gasPriceInWei.multiply(gasLimit),  4) + spockUnit;
+                    netCost = getNetCost(spockUnit);
                     tvGasCost.setText(String.valueOf(netCost ));
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -304,10 +304,14 @@ public class SendActivity extends BaseActivity {
         });
 
         try {
-            netCost = BalanceUtils.weiToEth(gasPriceInWei.multiply(gasLimit), 4) + spockUnit;
+            netCost = getNetCost(spockUnit);
         } catch (Exception e) {
             Log.e(TAG, "Failed to calculate netCost", e);
         }
+    }
+
+    private String getNetCost(String spockUnit) throws Exception {
+        return String.format("%s %s", BalanceUtils.weiToEth(gasPriceInWei.multiply(gasLimit), 4), spockUnit);
     }
 
     private void updateNetworkFee() {
@@ -328,23 +332,19 @@ public class SendActivity extends BaseActivity {
     }
 
     private boolean verifyInfo(String address, String amount) {
-
-            try {
-                new Address(address);
-            } catch (Exception e) {
-                ToastUtils.showToast(R.string.addr_error_tips);
-                return false;
-            }
-
-            try {
-                String wei = BalanceUtils.EthToWei(amount);
-                return wei != null;
-            } catch (Exception e) {
-                ToastUtils.showToast(R.string.amount_error_tips);
-
-                return false;
-            }
+        if (!Address.isSpockAddress(address)) {
+            ToastUtils.showToast(R.string.addr_error_tips);
+            return false;
         }
+
+        try {
+            String wei = BalanceUtils.EthToWei(amount);
+            return wei != null;
+        } catch (Exception e) {
+            ToastUtils.showToast(R.string.amount_error_tips);
+            return false;
+        }
+    }
 
 
 
@@ -358,13 +358,13 @@ public class SendActivity extends BaseActivity {
             case R.id.btn_next:
 
                 // confirm info;
-                String toAddr = etTransferAddress.getText().toString().trim();
+                String toAddr = getToAddress();
                 String amount = amountText.getText().toString().trim();
 
                 if (verifyInfo(toAddr, amount)) {
+                    String amountForDisplay = String.format("-%s %s", amount, C.SPOCK_UNIT);
                     ConfirmTransactionView confirmView = new ConfirmTransactionView(this, this::onClick);
-                    Log.d(TAG, "Netcost is " + netCost);
-                    confirmView.fillInfo(walletAddr, toAddr, " - " + amount + " " +  C.SPOCK_UNIT, netCost, gasPriceInWei, gasLimit);
+                    confirmView.fillInfo(walletAddr, toAddr, amountForDisplay, netCost, gasPriceInWei, gasLimit);
 
                     dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
                     dialog.setContentView(confirmView);
@@ -383,12 +383,12 @@ public class SendActivity extends BaseActivity {
                         viewModel.createTokenTransfer(pwd,
                                 etTransferAddress.getText().toString().trim(),
                                 contractAddress,
-                                BalanceUtils.tokenToWei(new BigDecimal(amountText.getText().toString().trim()), decimals).toBigInteger(),
+                                BalanceUtils.tokenToWei(new BigDecimal(amountText.getText().toString().trim ()), decimals).toBigInteger(),
                                 gasPriceInWei,
                                 gasLimit
                         );
                     } else {
-                        viewModel.createTransaction(pwd, etTransferAddress.getText().toString().trim(),
+                        viewModel.createTransaction(pwd, getToAddress(),
                                 Convert.toWei(amountText.getText().toString().trim(), Convert.Unit.ETHER).toBigInteger(),
                                 gasPriceInWei,
                                 gasLimit );
@@ -404,6 +404,10 @@ public class SendActivity extends BaseActivity {
 
                 break;
         }
+    }
+
+    private String getToAddress() {
+        return etTransferAddress.getText().toString().trim().toUpperCase();
     }
 
     private void logStartEvent() {
