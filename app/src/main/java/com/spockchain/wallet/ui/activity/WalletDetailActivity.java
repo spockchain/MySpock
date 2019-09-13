@@ -14,6 +14,7 @@ import com.spockchain.wallet.base.BaseActivity;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.ModifyWalletInteract;
 import com.spockchain.wallet.utils.Md5Utils;
+import com.spockchain.wallet.utils.PlotIdUtils;
 import com.spockchain.wallet.utils.TKeybord;
 import com.spockchain.wallet.utils.ToastUtils;
 import com.spockchain.wallet.utils.WalletDaoUtils;
@@ -65,6 +66,8 @@ public class WalletDetailActivity extends BaseActivity {
     TextView btnDeleteWallet;
     @BindView(R.id.btn_mnemonic_backup)
     TextView btnMnemonicBackup;
+    @BindView(R.id.tv_plot_id_value)
+    TextView tvPlotId;
     private long walletId;
     private String walletPwd;
     private String walletAddress;
@@ -112,6 +115,8 @@ public class WalletDetailActivity extends BaseActivity {
         etWalletName.setText(walletName);
         tvWalletAddress.setText(walletAddress);
 
+        String plotId = PlotIdUtils.getPlotIdFromSpockAddress(walletAddress);
+        tvPlotId.setText(plotId);
     }
 
 
