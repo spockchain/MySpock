@@ -27,6 +27,7 @@ import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.entity.Ticker;
 import com.spockchain.wallet.entity.Token;
 import com.spockchain.wallet.interact.FetchWalletInteract;
+import com.spockchain.wallet.ui.activity.CreateWalletActivity;
 import com.spockchain.wallet.ui.activity.GatheringQRCodeActivity;
 import com.spockchain.wallet.ui.activity.ImportWalletActivity;
 import com.spockchain.wallet.ui.activity.PropertyDetailActivity;
@@ -343,7 +344,7 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
         tvTolalAsset.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick({R.id.lly_menu, R.id.lly_qrcode_scanner, R.id.lly_create_wallet})
+    @OnClick({R.id.lly_menu, R.id.lly_qrcode_scanner, R.id.lly_create_wallet, R.id.lly_import_wallet})
     public void onClick(View view) {
         Intent intent = null;
         ETHWallet wallet = null;
@@ -356,8 +357,13 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 startActivityForResult(intent, QRCODE_SCANNER_REQUEST);
                 openOrCloseDrawerLayout();
                 break;
-            case R.id.lly_create_wallet:// 创建钱包
+            case R.id.lly_import_wallet: // 导入钱包
                 intent = new Intent(mContext, ImportWalletActivity.class);
+                startActivityForResult(intent, CREATE_WALLET_REQUEST);
+                openOrCloseDrawerLayout();
+                break;
+            case R.id.lly_create_wallet: // 创建钱包
+                intent = new Intent(mContext, CreateWalletActivity.class);
                 startActivityForResult(intent, CREATE_WALLET_REQUEST);
                 openOrCloseDrawerLayout();
                 break;

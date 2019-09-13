@@ -76,6 +76,30 @@
                 android:textColor="@color/property_ico_name_color"
                 android:textSize="14sp" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lly_import_wallet"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_marginEnd="23dp"
+                android:layout_marginLeft="24dp"
+                android:layout_marginRight="23dp"
+                android:layout_marginStart="24dp"
+                android:src="@drawable/ic_drawer_wallet" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/property_drawer_import_wallet"
+                android:textColor="@color/property_ico_name_color"
+                android:textSize="14sp" />
+        </LinearLayout>
     </LinearLayout>
 
 
