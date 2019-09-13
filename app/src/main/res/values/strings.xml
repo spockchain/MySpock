@@ -17,7 +17,7 @@
     <string name="create_wallet_pwd_again_hint">Repeat password</string>
     <string name="create_wallet_pwd_reminder_info_hint">Password hint (optional)</string>
     <string name="create_wallet_agreement_reminder">I acknowledge that I have read and agree to </string>
-    <string name="create_wallet_agreement">terms</string>
+    <string name="create_wallet_agreement">\u0020terms</string>
     <string name="create_wallet_name_repeat_tips">The wallet name already exists</string>
     <string name="create_wallet_name_input_tips">Please enter the account name</string>
     <string name="create_wallet_pwd_input_tips">You need a password</string>
