@@ -103,7 +103,7 @@ public class ImportKeystoreFragment extends BaseFragment {
     }
 
     public void loadSuccess(ETHWallet wallet) {
-        ToastUtils.showToast("导入钱包成功");
+        ToastUtils.showToast(getString(R.string.load_wallet_success));
         dismissDialog();
 
         getActivity().finish();
@@ -112,7 +112,7 @@ public class ImportKeystoreFragment extends BaseFragment {
     }
 
     public void onError(Throwable e) {
-        ToastUtils.showToast("导入钱包失败");
+        ToastUtils.showToast(getString(R.string.load_wallet_fail));
         dismissDialog();
     }
 

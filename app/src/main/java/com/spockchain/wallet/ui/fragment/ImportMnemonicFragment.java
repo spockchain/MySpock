@@ -110,14 +110,14 @@ public class ImportMnemonicFragment extends BaseFragment {
         StatService.trackCustomKVEvent(getContext(), "importWalletSuccess", prop);
 
         dismissDialog();
-        ToastUtils.showToast("导入钱包成功");
+        ToastUtils.showToast(getString(R.string.load_wallet_success));
 
         getActivity().finish();
 
     }
 
     public void onError(Throwable e) {
-        ToastUtils.showToast("导入钱包失败");
+        ToastUtils.showToast(getString(R.string.load_wallet_fail));
         dismissDialog();
     }
 

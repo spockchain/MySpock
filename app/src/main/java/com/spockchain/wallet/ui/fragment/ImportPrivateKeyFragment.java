@@ -120,7 +120,7 @@ public class ImportPrivateKeyFragment extends BaseFragment {
         prop.setProperty("method", "private key");
         StatService.trackCustomKVEvent(getContext(), "importWalletSuccess", prop);
 
-        ToastUtils.showToast("导入钱包成功");
+        ToastUtils.showToast(getString(R.string.load_wallet_success));
         dismissDialog();
 
         getActivity().finish();
