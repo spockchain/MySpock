@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.spockchain.wallet.R;
 import com.spockchain.wallet.base.BaseFragment;
+import com.spockchain.wallet.base.BaseImportAccountFragment;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.CreateWalletInteract;
 import com.spockchain.wallet.utils.ToastUtils;
@@ -25,7 +26,7 @@ import butterknife.OnClick;
  * WeiXin: xlbxiong
  */
 
-public class ImportPrivateKeyFragment extends BaseFragment {
+public class ImportPrivateKeyFragment extends BaseImportAccountFragment {
     @BindView(R.id.et_private_key)
     EditText etPrivateKey;
     @BindView(R.id.et_wallet_name)
@@ -123,8 +124,7 @@ public class ImportPrivateKeyFragment extends BaseFragment {
         ToastUtils.showToast(getString(R.string.load_wallet_success));
         dismissDialog();
 
-        getActivity().finish();
-
+        notifyImportAccountSuccess();
     }
 
     private void onError(Throwable error) {

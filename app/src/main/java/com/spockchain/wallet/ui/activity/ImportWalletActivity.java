@@ -70,8 +70,13 @@ public class ImportWalletActivity extends BaseActivity {
 
         // Hide the keystore import because our desktop wallet doesn't support it.
         //        fragmentList.add(new ImportKeystoreFragment());
-        fragmentList.add(new ImportMnemonicFragment());
-        fragmentList.add(new ImportPrivateKeyFragment());
+        ImportMnemonicFragment importMnemonicFragment = new ImportMnemonicFragment();
+        importMnemonicFragment.setOnImportAccountSuccessListener(this::onImportAccountSuccess);
+        fragmentList.add(importMnemonicFragment);
+
+        ImportPrivateKeyFragment importPrivateKeyFragment = new ImportPrivateKeyFragment();
+        importPrivateKeyFragment.setOnImportAccountSuccessListener(this::onImportAccountSuccess);
+        fragmentList.add(importPrivateKeyFragment);
     }
 
     @Override
@@ -89,16 +94,12 @@ public class ImportWalletActivity extends BaseActivity {
         vpLoadWallet.setOffscreenPageLimit(4);
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-
+    public void onImportAccountSuccess() {
+        finish();
         if (firstAccount) {
             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
         }
-
-        // TODO
     }
 }

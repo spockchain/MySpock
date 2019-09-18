@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.spockchain.wallet.R;
 import com.spockchain.wallet.base.BaseFragment;
+import com.spockchain.wallet.base.BaseImportAccountFragment;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.CreateWalletInteract;
 import com.spockchain.wallet.utils.ETHWalletUtils;
@@ -30,7 +31,7 @@ import butterknife.OnClick;
  * WeiXin: xlbxiong
  */
 
-public class ImportMnemonicFragment extends BaseFragment {
+public class ImportMnemonicFragment extends BaseImportAccountFragment {
 
     @BindView(R.id.et_mnemonic)
     EditText etMnemonic;
@@ -54,7 +55,6 @@ public class ImportMnemonicFragment extends BaseFragment {
     CreateWalletInteract createWalletInteract;
 
     private LoadWalletSelectStandardPopupWindow popupWindow;
-
     private String ethType = ETHWalletUtils.ETH_JAXX_TYPE;
 
     @Override
@@ -112,8 +112,7 @@ public class ImportMnemonicFragment extends BaseFragment {
         dismissDialog();
         ToastUtils.showToast(getString(R.string.load_wallet_success));
 
-        getActivity().finish();
-
+        notifyImportAccountSuccess();
     }
 
     public void onError(Throwable e) {
@@ -166,5 +165,4 @@ public class ImportMnemonicFragment extends BaseFragment {
         prop.setProperty("method", "mnemonic");
         StatService.trackCustomKVEvent(getContext(), "importWalletStart", prop);
     }
-
 }

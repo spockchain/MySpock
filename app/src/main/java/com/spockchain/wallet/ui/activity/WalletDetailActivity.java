@@ -48,8 +48,6 @@ public class WalletDetailActivity extends BaseActivity {
     RelativeLayout rlTitle;
     @BindView(R.id.civ_wallet)
     CircleImageView civWallet;
-    @BindView(R.id.tv_eth_balance)
-    TextView tvEthBalance;
     @BindView(R.id.lly_wallet_property)
     LinearLayout llyWalletProperty;
     @BindView(R.id.tv_wallet_address)
