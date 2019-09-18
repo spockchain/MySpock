@@ -441,7 +441,7 @@ public class SendActivity extends BaseActivity {
     private void onError(ErrorEnvelope error) {
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.error_transaction_failed)
-                .setMessage(error.message)
+                .setMessage(getString(R.string.error_send_transaction_failed, error.message))
                 .setPositiveButton(R.string.button_ok, (dialog1, id) -> {
                     // Do nothing
                 })

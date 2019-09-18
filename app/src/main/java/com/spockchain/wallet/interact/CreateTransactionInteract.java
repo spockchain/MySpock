@@ -1,5 +1,7 @@
 package com.spockchain.wallet.interact;
 
+import android.util.Log;
+
 import org.web3j.crypto.Credentials;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.Sign;
@@ -25,6 +27,7 @@ import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 import com.spockchain.wallet.domain.ETHWallet;
+import com.spockchain.wallet.entity.ServiceException;
 import com.spockchain.wallet.repository.EthereumNetworkRepository;
 import com.spockchain.wallet.repository.TokenRepository;
 import com.spockchain.wallet.utils.LogUtils;
@@ -69,6 +72,10 @@ public class CreateTransactionInteract {
 
             String hexValue = Numeric.toHexString(signedMessage);
             EthSendTransaction ethSendTransaction = web3j.ethSendRawTransaction(hexValue).send();
+
+            if (ethSendTransaction.hasError()) {
+                throw new ServiceException(ethSendTransaction.getError().getMessage());
+            }
 
             return ethSendTransaction.getTransactionHash();
 

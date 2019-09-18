@@ -148,5 +148,4 @@ public class ConfirmationViewModel extends BaseViewModel {
             this.gasSettings.postValue(updateSettings);
         }
     }
-
 }
