@@ -179,7 +179,7 @@ public class CreateWalletActivity extends BaseActivity {
     }
 
     public void jumpToWalletBackUp(ETHWallet wallet) {
-        ToastUtils.showToast("创建钱包成功");
+        ToastUtils.showToast(getString(R.string.create_wallet_success));
         dismissDialog();
 
         boolean firstAccount = getIntent().getBooleanExtra("first_account", false);
@@ -191,7 +191,7 @@ public class CreateWalletActivity extends BaseActivity {
         intent.putExtra("walletAddress", wallet.getAddress());
         intent.putExtra("walletName", wallet.getName());
         intent.putExtra("walletMnemonic", wallet.getMnemonic());
-        intent.putExtra("first_account", true);
+        intent.putExtra("first_account", firstAccount);
 
         startActivity(intent);
         finish();

@@ -3,6 +3,8 @@ package com.spockchain.wallet.utils;
 import com.spockchain.wallet.entity.Address;
 import com.spockchain.wallet.utils.bip44.HexUtils;
 
+import java.math.BigInteger;
+
 public class PlotIdUtils {
     public static String getPlotIdFromSpockAddress(String address) {
         if (!Address.isSpockAddress(address)) {
@@ -10,11 +12,6 @@ public class PlotIdUtils {
         }
         address = address.toUpperCase().replaceFirst("SPOCK-", "");
         byte[] addressInBytes = HexUtils.toBytes(address);
-
-        long plotId = 0;
-        for (int i = 8; i > 0; i--) {
-            plotId = (plotId << 8) + (addressInBytes[addressInBytes.length - i] & 0xff);
-        }
-        return String.valueOf(plotId);
+        return new BigInteger(HexUtils.toHex(addressInBytes, addressInBytes.length - 8, 8), 16).toString();
     }
 }

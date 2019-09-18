@@ -24,6 +24,7 @@
     <string name="create_wallet_pwd_confirm_input_tips">密码不一致，请重新输入</string>
     <string name="create_wallet_alert1">* 密码用于隐私保护和交易授权，强度非常重要</string>
     <string name="create_wallet_alert2">* 登链钱包不存储密码秘钥，也无法帮您找回，请务必牢记</string>
+    <string name="create_wallet_success">创建钱包成功！</string>
 
     <string name="property_total_assets_cny">总资产(¥)</string>
     <string name="property_total_assets_usd">总资产($)</string>

@@ -25,6 +25,7 @@
     <string name="create_wallet_pwd_confirm_input_tips">Password does not match. Please try again.</string>
     <string name="create_wallet_alert1">* Password is used for privacy protection and transaction authorization. It is critical to have a strong password.</string>
     <string name="create_wallet_alert2">* The app does not store your password. It can not recover your password. Please keep it with yourself.</string>
+    <string name="create_wallet_success">Create an account successfully!</string>
 
 
     <string name="property_total_assets_cny">Total Assets(¥)</string>
