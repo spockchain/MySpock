@@ -42,7 +42,7 @@ public class BaseViewModel extends ViewModel {
 		if (throwable instanceof ServiceException) {
 			error.postValue(((ServiceException) throwable).error);
 		} else {
-			error.postValue(new ErrorEnvelope(C.ErrorCode.UNKNOWN, null, throwable));
+			error.postValue(new ErrorEnvelope(C.ErrorCode.UNKNOWN, throwable.getMessage(), throwable));
 			// TODO: Add dialog with offer send error log to developers: notify about error.
 			Log.d("SESSION", "Err", throwable);
 		}
