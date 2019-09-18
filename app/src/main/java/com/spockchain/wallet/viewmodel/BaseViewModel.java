@@ -38,6 +38,7 @@ public class BaseViewModel extends ViewModel {
 	}
 
 	protected void onError(Throwable throwable) {
+		progress.postValue(false);
 		if (throwable instanceof ServiceException) {
 			error.postValue(((ServiceException) throwable).error);
 		} else {

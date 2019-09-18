@@ -356,54 +356,56 @@ public class SendActivity extends BaseActivity {
                 startActivityForResult(intent, QRCODE_SCANNER_REQUEST);
                 break;
             case R.id.btn_next:
-
                 // confirm info;
                 String toAddr = getToAddress();
                 String amount = amountText.getText().toString().trim();
 
                 if (verifyInfo(toAddr, amount)) {
-                    String amountForDisplay = String.format("-%s %s", amount, C.SPOCK_UNIT);
-                    ConfirmTransactionView confirmView = new ConfirmTransactionView(this, this::onClick);
-                    confirmView.fillInfo(walletAddr, toAddr, amountForDisplay, netCost, gasPriceInWei, gasLimit);
+                    BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
 
-                    dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
+                    String amountForDisplay = String.format("-%s %s", amount, C.SPOCK_UNIT);
+                    ConfirmTransactionView confirmView =
+                            new ConfirmTransactionView(
+                                    this,
+                                    (v) -> {
+                                        dialog.dismiss();
+                                        sendTransaction();
+                                    });
+                    confirmView.fillInfo(walletAddr, toAddr, amountForDisplay, netCost, gasPriceInWei, gasLimit);
                     dialog.setContentView(confirmView);
                     dialog.setCancelable(true);
                     dialog.setCanceledOnTouchOutside(true);
                     dialog.show();
                 }
-
-                break;
-            case R.id.confirm_button:
-                // send
-                dialog.hide();
-
-                InputPwdView pwdView = new InputPwdView(this, pwd -> {
-                    if (sendingTokens) {
-                        viewModel.createTokenTransfer(pwd,
-                                etTransferAddress.getText().toString().trim(),
-                                contractAddress,
-                                BalanceUtils.tokenToWei(new BigDecimal(amountText.getText().toString().trim ()), decimals).toBigInteger(),
-                                gasPriceInWei,
-                                gasLimit
-                        );
-                    } else {
-                        viewModel.createTransaction(pwd, getToAddress(),
-                                Convert.toWei(amountText.getText().toString().trim(), Convert.Unit.ETHER).toBigInteger(),
-                                gasPriceInWei,
-                                gasLimit );
-                        logStartEvent();
-                    }
-                });
-
-                dialog = new BottomSheetDialog(this);
-                dialog.setContentView(pwdView);
-                dialog.setCancelable(true);
-                dialog.setCanceledOnTouchOutside(true);
-                dialog.show();
-
                 break;
         }
+    }
+
+    private void sendTransaction() {
+        InputPwdView pwdView = new InputPwdView(this, pwd -> {
+            if (sendingTokens) {
+                viewModel.createTokenTransfer(pwd,
+                        etTransferAddress.getText().toString().trim(),
+                        contractAddress,
+                        BalanceUtils.tokenToWei(new BigDecimal(amountText.getText().toString().trim ()), decimals).toBigInteger(),
+                        gasPriceInWei,
+                        gasLimit
+                );
+            } else {
+                viewModel.createTransaction(pwd, getToAddress(),
+                        Convert.toWei(amountText.getText().toString().trim(), Convert.Unit.ETHER).toBigInteger(),
+                        gasPriceInWei,
+                        gasLimit );
+                logStartEvent();
+            }
+
+        });
+
+        BottomSheetDialog dialog = new BottomSheetDialog(this);
+        dialog.setContentView(pwdView);
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
     }
 
     private String getToAddress() {
@@ -422,7 +424,6 @@ public class SendActivity extends BaseActivity {
 
 
     private void onProgress(boolean shouldShowProgress) {
-        hideDialog();
         if (shouldShowProgress) {
             dialog = new AlertDialog.Builder(this)
                     .setTitle(R.string.title_dialog_sending)
@@ -430,11 +431,14 @@ public class SendActivity extends BaseActivity {
                     .setCancelable(false)
                     .create();
             dialog.show();
+        } else {
+            if (dialog != null) {
+                dialog.hide();
+            }
         }
     }
 
     private void onError(ErrorEnvelope error) {
-        hideDialog();
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.error_transaction_failed)
                 .setMessage(error.message)
@@ -446,8 +450,7 @@ public class SendActivity extends BaseActivity {
     }
 
     private void onTransaction(String hash) {
-        hideDialog();
-        dialog = new AlertDialog.Builder(this)
+        AlertDialog dialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.transaction_succeeded)
                 .setMessage(hash)
                 .setPositiveButton(R.string.button_ok, (dialog1, id) -> {
