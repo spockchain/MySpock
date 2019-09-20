@@ -247,7 +247,7 @@
     <string name="title_dialog_sending">Sending...</string>
     <string name="transaction_succeeded">Successful</string>
     <string name="error_transaction_failed">Failed to Send Transaction</string>
-    <string name="error_send_transaction_failed">Failed to send transaction.\n\nError: %s.</string>
+    <string name="error_send_transaction_failed">Error: %s.</string>
     <string name="copy">Copy</string>
 
 

@@ -246,7 +246,7 @@
     <string name="title_dialog_sending">发送...</string>
     <string name="transaction_succeeded">交易成功</string>
     <string name="error_transaction_failed">交易出错</string>
-    <string name="error_send_transaction_failed">交易出错.\n\n错误信息: %s.</string>
+    <string name="error_send_transaction_failed">错误信息: %s.</string>
     <string name="copy">复制</string>
 
 
