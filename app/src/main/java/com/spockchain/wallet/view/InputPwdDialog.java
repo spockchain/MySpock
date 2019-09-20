@@ -76,10 +76,6 @@ public class InputPwdDialog extends Dialog implements View.OnClickListener {
                     break;
                 case R.id.btn_confirm:// 确定
                     String pwd = etPwd.getText().toString().trim();
-                    if (TextUtils.isEmpty(pwd)) {
-                        ToastUtils.showToast(R.string.input_pwd_dialog_tip);
-                        return;
-                    }
                     onInputDialogButtonClickListener.onConfirm(pwd);
                     break;
             }
