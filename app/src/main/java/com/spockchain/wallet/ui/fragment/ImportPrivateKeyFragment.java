@@ -8,7 +8,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.spockchain.wallet.R;
-import com.spockchain.wallet.base.BaseFragment;
 import com.spockchain.wallet.base.BaseImportAccountFragment;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.CreateWalletInteract;
@@ -36,8 +35,6 @@ public class ImportPrivateKeyFragment extends BaseImportAccountFragment {
     EditText etWalletPwd;
     @BindView(R.id.et_wallet_pwd_again)
     EditText etWalletPwdAgain;
-    @BindView(R.id.et_wallet_pwd_reminder_info)
-    EditText etWalletPwdReminderInfo;
     @BindView(R.id.cb_agreement)
     CheckBox cbAgreement;
     @BindView(R.id.tv_agreement)
@@ -79,8 +76,7 @@ public class ImportPrivateKeyFragment extends BaseImportAccountFragment {
                 String name = etWalletName.getText().toString().trim();
                 String walletPwd = etWalletPwd.getText().toString().trim();
                 String confirmPwd = etWalletPwdAgain.getText().toString().trim();
-                String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
-                boolean verifyWalletInfo = verifyInfo(privateKey, name, walletPwd, confirmPwd, pwdReminder);
+                boolean verifyWalletInfo = verifyInfo(privateKey, name, walletPwd, confirmPwd);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.loading_wallet_tip));
                     logEvent();
@@ -96,7 +92,7 @@ public class ImportPrivateKeyFragment extends BaseImportAccountFragment {
         StatService.trackCustomKVEvent(getContext(), "importWalletStart", prop);
     }
 
-    private boolean verifyInfo(String privateKey, String name, String walletPwd, String confirmPwd, String pwdReminder) {
+    private boolean verifyInfo(String privateKey, String name, String walletPwd, String confirmPwd) {
         if (TextUtils.isEmpty(privateKey)) {
             ToastUtils.showToast(R.string.load_wallet_by_private_key_input_tip);
             return false;
@@ -105,10 +101,6 @@ public class ImportPrivateKeyFragment extends BaseImportAccountFragment {
             return false;
         } else if (TextUtils.isEmpty(walletPwd)) {
             ToastUtils.showToast(R.string.create_wallet_pwd_input_tips);
-            // 同时判断强弱
-            return false;
-        } else if (walletPwd.length() < 9) {
-            ToastUtils.showToast(R.string.load_wallet_by_private_key_wallet_pwd_too_short);
             return false;
         } else if (TextUtils.isEmpty(confirmPwd) || !TextUtils.equals(confirmPwd, walletPwd)) {
             ToastUtils.showToast(R.string.create_wallet_pwd_confirm_input_tips);

@@ -41,6 +41,8 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
     EditText etMnemonicPwd;
     @BindView(R.id.et_wallet_pwd)
     EditText etWalletPwd;
+    @BindView(R.id.et_wallet_pwd_again)
+    EditText etWalletPwdAgain;
     @BindView(R.id.cb_agreement)
     CheckBox cbAgreement;
     @BindView(R.id.tv_agreement)
@@ -127,7 +129,8 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
                 String name = etWalletName.getText().toString().trim();
                 String mnemonicPwd = etMnemonicPwd.getText().toString().trim();
                 String walletPwd = etWalletPwd.getText().toString().trim();
-                boolean verifyWalletInfo = verifyInfo(mnemonic, name);
+                String confirmPwd = etWalletPwdAgain.getText().toString().trim();
+                boolean verifyWalletInfo = verifyInfo(mnemonic, name, walletPwd, confirmPwd);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.loading_wallet_tip));
                     logEvent();
@@ -141,7 +144,7 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
         }
     }
 
-    private boolean verifyInfo(String mnemonic, String name) {
+    private boolean verifyInfo(String mnemonic, String name, String pwd, String confirmPwd) {
         if (TextUtils.isEmpty(mnemonic)) {
             ToastUtils.showToast(R.string.load_wallet_by_mnemonic_input_tip);
             return false;
@@ -156,6 +159,12 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
             return false;
         } else if (WalletDaoUtils.checkDuplicateName(name)) {
             ToastUtils.showToast(R.string.load_wallet_name_already_exist);
+            return false;
+        } else if (TextUtils.isEmpty(pwd)) {
+            ToastUtils.showToast(R.string.create_wallet_pwd_input_tips);
+            return false;
+        } else if (TextUtils.isEmpty(confirmPwd) || !TextUtils.equals(confirmPwd, pwd)) {
+            ToastUtils.showToast(R.string.create_wallet_pwd_confirm_input_tips);
             return false;
         }
         return true;
