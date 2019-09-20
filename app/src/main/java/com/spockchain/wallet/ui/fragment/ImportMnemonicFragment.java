@@ -3,13 +3,11 @@ package com.spockchain.wallet.ui.fragment;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.spockchain.wallet.R;
-import com.spockchain.wallet.base.BaseFragment;
 import com.spockchain.wallet.base.BaseImportAccountFragment;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.CreateWalletInteract;
@@ -39,10 +37,10 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
     EditText etWalletName;
     @BindView(R.id.et_standard)
     EditText etStandard;
+    @BindView(R.id.et_mnemonic_pwd)
+    EditText etMnemonicPwd;
     @BindView(R.id.et_wallet_pwd)
     EditText etWalletPwd;
-    @BindView(R.id.et_wallet_pwd_reminder_info)
-    EditText etWalletPwdReminderInfo;
     @BindView(R.id.cb_agreement)
     CheckBox cbAgreement;
     @BindView(R.id.tv_agreement)
@@ -127,13 +125,13 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
             case R.id.btn_load_wallet:
                 String mnemonic = etMnemonic.getText().toString().trim();
                 String name = etWalletName.getText().toString().trim();
+                String mnemonicPwd = etMnemonicPwd.getText().toString().trim();
                 String walletPwd = etWalletPwd.getText().toString().trim();
-                String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
-                boolean verifyWalletInfo = verifyInfo(mnemonic, name, walletPwd, pwdReminder);
+                boolean verifyWalletInfo = verifyInfo(mnemonic, name);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.loading_wallet_tip));
                     logEvent();
-                    createWalletInteract.loadWalletByMnemonic(ethType, mnemonic, walletPwd, name).subscribe(this::loadSuccess, this::onError);
+                    createWalletInteract.loadWalletByMnemonic(ethType, mnemonic, mnemonicPwd, walletPwd, name).subscribe(this::loadSuccess, this::onError);
                 }
                 break;
             case R.id.lly_standard_menu:
@@ -143,7 +141,7 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
         }
     }
 
-    private boolean verifyInfo(String mnemonic, String name, String walletPwd, String pwdReminder) {
+    private boolean verifyInfo(String mnemonic, String name) {
         if (TextUtils.isEmpty(mnemonic)) {
             ToastUtils.showToast(R.string.load_wallet_by_mnemonic_input_tip);
             return false;
@@ -153,8 +151,11 @@ public class ImportMnemonicFragment extends BaseImportAccountFragment {
         } else if (!WalletDaoUtils.isValid(mnemonic)) {
             ToastUtils.showToast(R.string.load_wallet_by_mnemonic_input_tip);
             return false;
-        } else if (WalletDaoUtils.checkRepeatByMenmonic(mnemonic)) {
+        } else if (WalletDaoUtils.checkRepeatByMnemonic(mnemonic)) {
             ToastUtils.showToast(R.string.load_wallet_already_exist);
+            return false;
+        } else if (WalletDaoUtils.checkDuplicateName(name)) {
+            ToastUtils.showToast(R.string.load_wallet_name_already_exist);
             return false;
         }
         return true;

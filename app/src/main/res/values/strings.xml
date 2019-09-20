@@ -14,7 +14,7 @@
     <string name="property_drawer_import_wallet">Import Existing Account</string>
 
     <string name="create_wallet_name_hint">Wallet name</string>
-    <string name="create_wallet_pwd_hint">Password</string>
+    <string name="create_wallet_pwd_hint">Wallet Password</string>
     <string name="create_wallet_pwd_again_hint">Repeat password</string>
     <string name="create_wallet_pwd_reminder_info_hint">Password hint (optional)</string>
     <string name="create_wallet_agreement_reminder">I acknowledge that I have read and agree to </string>
@@ -139,7 +139,7 @@
     <string name="load_wallet_indicator_observer">观察</string>
 
     <string name="load_wallet_by_mnemonic_hint">Mnemonic phrase, delimited by space.</string>
-    <string name="load_wallet_by_mnemonic_password_hint">Password (must be same as the desktop wallet one)</string>
+    <string name="load_wallet_by_mnemonic_password_hint">Mnemonic Password (must be same as the desktop wallet one. Could be empty.)</string>
     <string name="load_wallet_by_mnemonic_input_tip">Please double check the mnemonic phrase.</string>
     <string name="load_wallet_by_mnemonic_standard">m/44\'/60\'/0\'/0/0</string>
     <string name="load_wallet_by_mnemonic_standard_ledger">m/44\'/60\'/0\'/0</string>
@@ -149,6 +149,7 @@
     <string name="load_wallet_by_mnemonic_standard_custom_option">m/44\'/60\'/1\'/0/0 自定义路径</string>
     <string name="load_wallet_by_mnemonic_help">What is mnemonic phrase?</string>
     <string name="load_wallet_already_exist">Account already exists</string>
+    <string name="load_wallet_name_already_exist">Name already exists</string>
 
     <string name="load_wallet_by_official_wallet_keystore_hint">keystore</string>
     <string name="load_wallet_by_official_wallet_keystore_tip">直接复制粘贴以太坊官方钱包keystore文件内容至输入框。或者通过生成keystore内容的二维码，扫描录入。</string>

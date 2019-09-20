@@ -110,7 +110,7 @@ public class WalletDaoUtils {
      * @param mnemonic
      * @return true if repeat
      */
-    public static boolean checkRepeatByMenmonic(String mnemonic) {
+    public static boolean checkRepeatByMnemonic(String mnemonic) {
         List<ETHWallet> ethWallets = loadAll();
         for (ETHWallet ethWallet : ethWallets
                 ) {
@@ -119,6 +119,23 @@ public class WalletDaoUtils {
                 continue;
             }
             if (TextUtils.equals(ethWallet.getMnemonic().trim(), mnemonic.trim())) {
+                LogUtils.d("aleady");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkDuplicateName(String walletName) {
+        walletName = walletName.trim();
+        List<ETHWallet> ethWallets = loadAll();
+        for (ETHWallet ethWallet : ethWallets
+        ) {
+            if (TextUtils.isEmpty(ethWallet.getName())) {
+                LogUtils.d("wallet mnemonic empty");
+                continue;
+            }
+            if (TextUtils.equals(ethWallet.getName().trim(), walletName)) {
                 LogUtils.d("aleady");
                 return true;
             }

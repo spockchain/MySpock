@@ -13,6 +13,7 @@ import com.spockchain.wallet.base.BaseImportAccountFragment;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.interact.CreateWalletInteract;
 import com.spockchain.wallet.utils.ToastUtils;
+import com.spockchain.wallet.utils.WalletDaoUtils;
 import com.tencent.stat.StatService;
 
 import java.util.Properties;
@@ -111,6 +112,9 @@ public class ImportPrivateKeyFragment extends BaseImportAccountFragment {
             return false;
         } else if (TextUtils.isEmpty(confirmPwd) || !TextUtils.equals(confirmPwd, walletPwd)) {
             ToastUtils.showToast(R.string.create_wallet_pwd_confirm_input_tips);
+            return false;
+        } else if (WalletDaoUtils.checkDuplicateName(name)) {
+            ToastUtils.showToast(R.string.load_wallet_name_already_exist);
             return false;
         }
         return true;
