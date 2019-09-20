@@ -2,6 +2,7 @@ package com.spockchain.wallet.utils;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.spockchain.wallet.domain.ETHWallet;
@@ -31,6 +32,8 @@ import java.util.List;
  */
 
 public class ETHWalletUtils {
+
+    private static final String TAG = "ETHWalletUtils";
 
     private static ObjectMapper objectMapper = ObjectMapperFactory.getObjectMapper();
     /**
@@ -155,27 +158,28 @@ public class ETHWalletUtils {
         return sb.toString();
     }
 
-    @Nullable
-    private static ETHWallet generateWallet(String walletName, String pwd, ECKeyPair ecKeyPair) {
-        WalletFile keyStoreFile;
+    private static WalletFile generateKeyStoreFile(String pwd, ECKeyPair ecKeyPair) {
         try {
-            keyStoreFile = Wallet.create(pwd, ecKeyPair, 1024, 1); // WalletUtils. .generateNewWalletFile();
+            WalletFile keyStoreFile = Wallet.create(pwd, ecKeyPair, 1024, 1);
+            return keyStoreFile;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Nullable
+    private static ETHWallet generateWallet(String walletName, String pwd, ECKeyPair ecKeyPair) {
+        WalletFile keyStoreFile = generateKeyStoreFile(pwd, ecKeyPair);
 
         BigInteger publicKey = ecKeyPair.getPublicKey();
         String s = publicKey.toString();
         LogUtils.i("ETHWalletUtils", "publicKey = " + s);
 
-        String wallet_dir = AppFilePath.Wallet_DIR;
-        LogUtils.i("ETHWalletUtils", "wallet_dir = " + wallet_dir);
-
-        String keystorePath = "keystore_" + walletName + ".json";
-        File destination = new File(wallet_dir, "keystore_" + walletName + ".json");
+        File destination = getKeyStoreFile(walletName);
 
         //目录不存在则创建目录，创建不了则报错
+        Log.i(TAG, "Creating file: " + destination.getAbsolutePath());
         if (!createParentDir(destination)) {
             return null;
         }
@@ -191,6 +195,15 @@ public class ETHWalletUtils {
         ethWallet.setKeystorePath(destination.getAbsolutePath());
         ethWallet.setPassword(Md5Utils.md5(pwd));
         return ethWallet;
+    }
+
+    private static File getKeyStoreFile(String walletName) {
+        String keystorePath = getKeyStorePath(walletName);
+        return new File(AppFilePath.Wallet_DIR, keystorePath);
+    }
+
+    private static String getKeyStorePath(String walletName) {
+        return "keystore_" + walletName + ".json";
     }
 
     /**
@@ -245,12 +258,14 @@ public class ETHWalletUtils {
     }
 
     private static boolean createParentDir(File file) {
+        File parentFile = file.getParentFile();
+
         //判断目标文件所在的目录是否存在
-        if (!file.getParentFile().exists()) {
+        if (!parentFile.exists()) {
             //如果目标文件所在的目录不存在，则创建父目录
-            System.out.println("目标文件所在目录不存在，准备创建");
-            if (!file.getParentFile().mkdirs()) {
-                System.out.println("创建目标文件所在目录失败！");
+            Log.e(TAG,"目标文件所在目录不存在，准备创建");
+            if (!parentFile.mkdirs()) {
+                Log.e(TAG, "创建目标文件所在目录失败！");
                 return false;
             }
         }
@@ -266,22 +281,20 @@ public class ETHWalletUtils {
      * @param newPassword
      * @return
      */
-    public static ETHWallet modifyPassword(long walletId, String walletName, String oldPassword, String newPassword) {
+    public static ETHWallet modifyPassword(long walletId, String walletName, String oldPassword, String newPassword) throws IOException, CipherException {
+        Log.i(TAG, "Modify wallet: " + walletName);
         ETHWallet ethWallet = WalletDaoUtils.ethWalletDao.load(walletId);
-        Credentials credentials = null;
-        ECKeyPair keypair = null;
-        try {
-            credentials = WalletUtils.loadCredentials(oldPassword, ethWallet.getKeystorePath());
-            keypair = credentials.getEcKeyPair();
-            File destinationDirectory = new File(AppFilePath.Wallet_DIR, "keystore_" + walletName + ".json");
-            WalletUtils.generateWalletFile(newPassword, keypair, destinationDirectory, true);
-            ethWallet.setPassword(newPassword);
-            WalletDaoUtils.ethWalletDao.insert(ethWallet);
-        } catch (CipherException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        Credentials credentials = WalletUtils.loadCredentials(oldPassword, ethWallet.getKeystorePath());
+        ECKeyPair keypair = credentials.getEcKeyPair();
+
+        WalletFile keyStoreFile =  generateKeyStoreFile(newPassword, keypair);
+        if (keyStoreFile == null) {
+            throw new IOException("Failed to create KeyStore file");
         }
+
+        objectMapper.writeValue(getKeyStoreFile(walletName), keyStoreFile);
+        ethWallet.setPassword(Md5Utils.md5(newPassword));
+        WalletDaoUtils.ethWalletDao.insertOrReplace(ethWallet);
         return ethWallet;
     }
 

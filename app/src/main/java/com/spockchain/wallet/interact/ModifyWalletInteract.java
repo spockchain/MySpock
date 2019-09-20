@@ -1,10 +1,10 @@
 package com.spockchain.wallet.interact;
 
-import io.reactivex.Single;
 import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.utils.ETHWalletUtils;
 import com.spockchain.wallet.utils.WalletDaoUtils;
 
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -31,9 +31,7 @@ public class ModifyWalletInteract {
 
     public Single<ETHWallet> modifyWalletPwd(final long walletId, final String walletName, final String oldPassword, final String newPassword) {
 
-        return Single.fromCallable(() -> {
-            return ETHWalletUtils.modifyPassword(walletId, walletName, oldPassword, newPassword);
-                }
+        return Single.fromCallable(() -> ETHWalletUtils.modifyPassword(walletId, walletName, oldPassword, newPassword)
 
         ).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());

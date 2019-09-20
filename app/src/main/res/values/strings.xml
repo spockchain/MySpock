@@ -188,6 +188,8 @@
     <string name="modify_password_alert4">Current password is wrong</string>
     <string name="modify_password_alert5">New passwords do not match</string>
     <string name="modify_password_success">Password is reset</string>
+    <string name="modify_password_fail_title">Failed to reset password</string>
+    <string name="modify_password_fail_button">OK</string>
 
     <string name="derive_private_key_alert">Safety alert: Private key is NOT encrypted. It is recommended to backup your wallet with mnemonic phrase or keystore.</string>
     <string name="derive_private_key_copy_btn">Copy</string>

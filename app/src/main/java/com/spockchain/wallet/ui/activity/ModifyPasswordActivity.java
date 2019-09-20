@@ -1,6 +1,7 @@
 package com.spockchain.wallet.ui.activity;
 
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -80,36 +81,9 @@ public class ModifyPasswordActivity extends BaseActivity {
 
     @Override
     public void configViews() {
-        etOldPwd.addTextChangedListener(watcher);
-        etNewPwd.addTextChangedListener(watcher);
-        etNewPwdAgain.addTextChangedListener(watcher);
+        rlBtn.setEnabled(true);
+        ivBtn.setTextColor(getResources().getColor(R.color.transfer_advanced_setting_help_text_color));
     }
-
-    TextWatcher watcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            String oldPwd = etOldPwd.getText().toString().trim();
-            String newPwd = etNewPwd.getText().toString().trim();
-            String newPwdAgain = etNewPwdAgain.getText().toString().trim();
-            if (TextUtils.isEmpty(oldPwd) || TextUtils.isEmpty(newPwd) || TextUtils.isEmpty(newPwdAgain)) {
-                rlBtn.setEnabled(false);
-                ivBtn.setTextColor(getResources().getColor(R.color.property_ico_worth_color));
-            } else {
-                rlBtn.setEnabled(true);
-                ivBtn.setTextColor(getResources().getColor(R.color.transfer_advanced_setting_help_text_color));
-            }
-        }
-    };
 
     @OnClick({R.id.tv_import_wallet, R.id.rl_btn})
     public void onClick(View view) {
@@ -124,7 +98,7 @@ public class ModifyPasswordActivity extends BaseActivity {
                 String newPwdAgain = etNewPwdAgain.getText().toString().trim();
                 if (verifyPassword(oldPwd, newPwd, newPwdAgain)) {
                     showDialog(getString(R.string.saving_wallet_tip));
-                    modifyWalletInteract.modifyWalletPwd(walletId, walletName, oldPwd, newPwd).subscribe(this::modifyPwdSuccess);
+                    modifyWalletInteract.modifyWalletPwd(walletId, walletName, oldPwd, newPwd).subscribe(this::modifyPwdSuccess, this::onModifyPwdFailure);
                 }
                 break;
         }
@@ -141,10 +115,6 @@ public class ModifyPasswordActivity extends BaseActivity {
         return true;
     }
 
-    public void modifySuccess() {
-
-    }
-
     public void modifyPwdSuccess(ETHWallet ethWallet) {
         dismissDialog();
         ToastUtils.showToast(R.string.modify_password_success);
@@ -152,6 +122,19 @@ public class ModifyPasswordActivity extends BaseActivity {
         data.putExtra("newPwd", ethWallet.getPassword());
         setResult(MODIFY_PWD_RESULT, data);
         finish();
+    }
+
+    private void onModifyPwdFailure(Throwable t) {
+        dismissDialog();
+
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.modify_password_fail_title))
+                .setMessage(t.getMessage())
+                .setPositiveButton(getString(R.string.modify_password_fail_button), (dialog1, id) -> {
+                    // Do nothing
+                })
+                .create();
+        dialog.show();
     }
 
     public void showDerivePrivateKeyDialog(String privateKey) {
