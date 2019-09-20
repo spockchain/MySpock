@@ -57,7 +57,7 @@
     <string name="transfer_title_confirm">Transaction Details</string>
     <string name="transfer_title">Send Transaction</string>
     <string name="transfer_address">To Address</string>
-    <string name="transfer_money">Amount (Spock)</string>
+    <string name="transfer_money">Amount (Spok)</string>
     <string name="transfer_remark">Note</string>
     <string name="transfer_gas_cost">Gas Cost</string>
     <string name="transfer_gas_price">Specify Gas Price</string>
