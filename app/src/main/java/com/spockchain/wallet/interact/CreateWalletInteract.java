@@ -16,9 +16,9 @@ public class CreateWalletInteract {
     public CreateWalletInteract() {
     }
 
-    public Single<ETHWallet> create(final String name, final String pwd, String confirmPwd, String pwdReminder) {
+    public Single<ETHWallet> create(final String name, final String mnemonicPwd, String walletPwd) {
         return Single.fromCallable(() -> {
-            ETHWallet ethWallet = ETHWalletUtils.generateMnemonic(name, pwd);
+            ETHWallet ethWallet = ETHWalletUtils.generateMnemonic(name, mnemonicPwd, walletPwd);
             WalletDaoUtils.insertNewWallet(ethWallet);
             return ethWallet;
         }).subscribeOn(Schedulers.io())

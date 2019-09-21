@@ -13,7 +13,7 @@
     <string name="property_drawer_import_wallet">导入钱包</string>
 
     <string name="create_wallet_name_hint">钱包名称</string>
-    <string name="create_wallet_pwd_hint">创建钱包密码（只用于手机钱包）</string>
+    <string name="create_wallet_pwd_hint">创建钱包密码（只用于手机钱包转账、删除等危险操作）</string>
     <string name="create_wallet_pwd_again_hint">重复密码</string>
     <string name="create_wallet_pwd_reminder_info_hint">密码提示信息(可不填)</string>
     <string name="create_wallet_agreement_reminder">我已经仔细阅读并同意</string>
@@ -22,9 +22,12 @@
     <string name="create_wallet_name_input_tips">请输入钱包名称</string>
     <string name="create_wallet_pwd_input_tips">密码不能为空</string>
     <string name="create_wallet_pwd_confirm_input_tips">密码不一致，请重新输入</string>
+    <string name="create_wallet_mnemonic_pwd_confirm_input_tips">助记词密码不一致，请重新输入</string>
     <string name="create_wallet_alert1">* 密码用于隐私保护和交易授权，强度非常重要</string>
-    <string name="create_wallet_alert2">* 登链钱包不存储密码秘钥，也无法帮您找回，请务必牢记</string>
+    <string name="create_wallet_alert2">* 手机钱包不存储密码秘钥，也无法帮您找回，请务必牢记</string>
     <string name="create_wallet_success">创建钱包成功！</string>
+    <string name="create_wallet_mnemonic_pwd_input_tips">助记词密码 (可不填。和助记词一起使用恢复钱包)</string>
+    <string name="create_wallet_confirm_mnemonic_pwd_input_tips">重复助记词密码</string>
 
     <string name="property_total_assets_cny">总资产(¥)</string>
     <string name="property_total_assets_usd">总资产($)</string>
@@ -137,7 +140,7 @@
     <string name="load_wallet_indicator_observer">观察</string>
 
     <string name="load_wallet_by_mnemonic_hint">助记词，按空格分隔</string>
-    <string name="load_wallet_by_mnemonic_password_hint">助记词密码 (必须和使用桌面钱包生成此账号时所用的密码一致)</string>
+    <string name="load_wallet_by_mnemonic_password_hint">助记词密码\n (必须和使用桌面钱包生成此账号时所用的密码一致)</string>
     <string name="load_wallet_by_mnemonic_input_tip">请检查您的助记词</string>
     <string name="load_wallet_by_mnemonic_standard">m/44\'/60\'/0\'/0/0</string>
     <string name="load_wallet_by_mnemonic_standard_ledger">m/44\'/60\'/0\'/0</string>

@@ -44,8 +44,10 @@ public class CreateWalletActivity extends BaseActivity {
     EditText etWalletPwd;
     @BindView(R.id.et_wallet_pwd_again)
     EditText etWalletPwdAgain;
-    @BindView(R.id.et_wallet_pwd_reminder_info)
-    EditText etWalletPwdReminderInfo;
+    @BindView(R.id.et_mnemonic_pwd)
+    EditText etMnemonicPwd;
+    @BindView(R.id.et_confirm_mnemonic_pwd)
+    EditText etConfirmMnemonicPwd;
     @BindView(R.id.cb_agreement)
     CheckBox cbAgreement;
     @BindView(R.id.common_toolbar)
@@ -128,13 +130,14 @@ public class CreateWalletActivity extends BaseActivity {
                 break;
             case R.id.btn_create_wallet:
                 String walletName = etWalletName.getText().toString().trim();
+                String mnemonicPwd = etMnemonicPwd.getText().toString().trim();
+                String confirmMnemonicPwd = etConfirmMnemonicPwd.getText().toString().trim();
                 String walletPwd = etWalletPwd.getText().toString().trim();
                 String confirmPwd = etWalletPwdAgain.getText().toString().trim();
-                String pwdReminder = etWalletPwdReminderInfo.getText().toString().trim();
-                boolean verifyWalletInfo = verifyInfo(walletName, walletPwd, confirmPwd, pwdReminder);
+                boolean verifyWalletInfo = verifyInfo(walletName, mnemonicPwd, confirmMnemonicPwd, walletPwd, confirmPwd);
                 if (verifyWalletInfo) {
                     showDialog(getString(R.string.creating_wallet_tip));
-                    createWalletInteract.create(walletName, walletPwd, confirmPwd, pwdReminder).subscribe(this::jumpToWalletBackUp, this::showError);
+                    createWalletInteract.create(walletName, mnemonicPwd, walletPwd).subscribe(this::jumpToWalletBackUp, this::showError);
                 }
                 break;
             case R.id.lly_wallet_agreement:
@@ -151,14 +154,16 @@ public class CreateWalletActivity extends BaseActivity {
         }
     }
 
-    private boolean verifyInfo(String walletName, String walletPwd, String confirmPwd, String pwdReminder) {
-        if (WalletDaoUtils.walletNameChecking(walletName)) {
+    private boolean verifyInfo(String walletName, String mnemonicPwd, String confirmMnemonicPwd, String walletPwd, String confirmPwd) {
+        if (TextUtils.isEmpty(walletName)) {
+            ToastUtils.showToast(R.string.create_wallet_name_input_tips);
+            return false;
+        } else if (WalletDaoUtils.walletNameChecking(walletName)) {
             ToastUtils.showToast(R.string.create_wallet_name_repeat_tips);
             // 同时不可重复
             return false;
-        } else if (TextUtils.isEmpty(walletName)) {
-            ToastUtils.showToast(R.string.create_wallet_name_input_tips);
-            // 同时不可重复
+        } else if (!TextUtils.equals(confirmMnemonicPwd, mnemonicPwd)) {
+            ToastUtils.showToast(R.string.create_wallet_mnemonic_pwd_confirm_input_tips);
             return false;
         } else if (TextUtils.isEmpty(walletPwd)) {
             ToastUtils.showToast(R.string.create_wallet_pwd_input_tips);

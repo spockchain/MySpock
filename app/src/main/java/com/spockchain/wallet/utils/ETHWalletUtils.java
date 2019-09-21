@@ -53,15 +53,15 @@ public class ETHWalletUtils {
      * 创建助记词，并通过助记词创建钱包
      *
      * @param walletName
-     * @param pwd
+     * @param mnemonicPwd
      * @return
      */
-    public static ETHWallet generateMnemonic(String walletName, String pwd) {
+    public static ETHWallet generateMnemonic(String walletName, String mnemonicPwd, String walletPwd) {
         String[] pathArray = ETH_JAXX_TYPE.split("/");
         long creationTimeSeconds = System.currentTimeMillis() / 1000;
 
-        DeterministicSeed ds = new DeterministicSeed(secureRandom, 128, pwd, creationTimeSeconds);
-        return generateWalletByMnemonic(walletName, ds, pathArray, pwd);
+        DeterministicSeed ds = new DeterministicSeed(secureRandom, 128, mnemonicPwd, creationTimeSeconds);
+        return generateWalletByMnemonic(walletName, ds, pathArray, walletPwd);
     }
 
     /**

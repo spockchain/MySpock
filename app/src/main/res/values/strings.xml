@@ -14,7 +14,7 @@
     <string name="property_drawer_import_wallet">Import Existing Account</string>
 
     <string name="create_wallet_name_hint">Wallet name</string>
-    <string name="create_wallet_pwd_hint">Create Wallet Password (Only used in this app)</string>
+    <string name="create_wallet_pwd_hint">Create wallet password\n(Only used in this app for transaction authorization)</string>
     <string name="create_wallet_pwd_again_hint">Repeat password</string>
     <string name="create_wallet_pwd_reminder_info_hint">Password hint (optional)</string>
     <string name="create_wallet_agreement_reminder">I acknowledge that I have read and agree to </string>
@@ -23,9 +23,12 @@
     <string name="create_wallet_name_input_tips">Please enter the account name</string>
     <string name="create_wallet_pwd_input_tips">You need a password</string>
     <string name="create_wallet_pwd_confirm_input_tips">Password does not match. Please try again.</string>
+    <string name="create_wallet_mnemonic_pwd_confirm_input_tips">Mnemonic passphrase does not match. Please try again.</string>
     <string name="create_wallet_alert1">* Password is used for privacy protection and transaction authorization. It is critical to have a strong password.</string>
     <string name="create_wallet_alert2">* The app does not store your password. It can not recover your password. Please keep it with yourself.</string>
     <string name="create_wallet_success">Create an account successfully!</string>
+    <string name="create_wallet_mnemonic_pwd_input_tips">Mnemonic passphrase\n(Optional. Used with mnemonic phrase to recover account)</string>
+    <string name="create_wallet_confirm_mnemonic_pwd_input_tips">Repeat mnemonic passphrase</string>
 
 
     <string name="property_total_assets_cny">Total Assets(¥)</string>
