@@ -198,16 +198,6 @@
             android:gravity="center"
             android:text="@string/load_wallet_btn"
             android:textColor="@color/white" />
-
-        <TextView
-            android:id="@+id/btn_help"
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_marginTop="15dp"
-            android:gravity="center"
-            android:text="@string/load_wallet_by_mnemonic_help"
-            android:textColor="@color/transfer_advanced_setting_help_text_color"
-            android:textSize="12sp" />
     </LinearLayout>
 
 

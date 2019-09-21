@@ -43,8 +43,6 @@ public class ImportPrivateKeyFragment extends BaseImportAccountFragment {
     LinearLayout llyWalletAgreement;
     @BindView(R.id.btn_load_wallet)
     TextView btnLoadWallet;
-    @BindView(R.id.btn_help)
-    TextView btnHelp;
 
     CreateWalletInteract createWalletInteract;
 
