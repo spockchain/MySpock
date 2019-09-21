@@ -119,6 +119,7 @@
             android:background="@null"
             android:hint="@string/create_wallet_pwd_hint"
             android:textColor="@color/discovery_application_item_name_color"
+            android:inputType="textPassword"
             android:textSize="13sp" />
 
         <View
