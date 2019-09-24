@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,8 @@ import com.spockchain.wallet.ui.activity.ContactsActivity;
 import com.spockchain.wallet.ui.activity.NetSettingActivity;
 import com.spockchain.wallet.ui.activity.TransactionsActivity;
 import com.spockchain.wallet.ui.activity.WalletMangerActivity;
+import com.spockchain.wallet.utils.VersionChecker;
+import com.spockchain.wallet.view.loadding.CustomDialog;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -23,6 +26,8 @@ public class MineFragment extends BaseFragment {
 
     @BindView(R.id.tv_version_name)
     TextView tvVersion;
+
+    private VersionChecker versionChecker;
 
     @Override
     public int getLayoutResId() {
@@ -36,7 +41,7 @@ public class MineFragment extends BaseFragment {
 
     @Override
     public void initDatas() {
-
+        versionChecker = new VersionChecker(this.getContext());
     }
 
     @Override
@@ -50,7 +55,7 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.lly_wallet_manage, R.id.lly_trade_recode, R.id.lly_contacts, R.id.github_website, R.id.lly_system_setting})
+    @OnClick({R.id.github_website, R.id.lly_check_update})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -73,6 +78,22 @@ public class MineFragment extends BaseFragment {
             case  R.id.lly_system_setting:
                 intent = new Intent(getActivity(), NetSettingActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.lly_check_update:
+                CustomDialog loadingDialog = CustomDialog.instance(this.getContext());
+                loadingDialog.setTvProgress(getString(R.string.mine_check_update_loading_text));
+                loadingDialog.show();
+                versionChecker.checkNewVersion((boolean hasNewUpdate) -> {
+                    loadingDialog.dismiss();
+                    if (!hasNewUpdate) {
+                        AlertDialog noUpdateDilaog = new AlertDialog.Builder(this.getContext())
+                                .setTitle(R.string.mine_check_update_no_update_dialog_title)
+                                .setMessage(R.string.mine_check_update_no_update_dialog_content)
+                                .setPositiveButton(R.string.mine_check_update_no_update_dialog_button, null)
+                                .create();
+                        noUpdateDilaog.show();
+                    }
+                });
                 break;
         }
     }
