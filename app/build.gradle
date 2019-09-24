@@ -11,8 +11,8 @@ android {
         minSdkVersion 21
         //noinspection ExpiredTargetSdkVersion
         targetSdkVersion 26
-        versionCode 7
-        versionName "3.1.0"
+        versionCode 10
+        versionName "4.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled true
@@ -139,6 +139,9 @@ dependencies {
     implementation 'com.qq.mta:mta:3.4.2'
     //MID基础包
     implementation 'com.tencent.mid:mid:3.73-release'
+
+    // Version check.
+    implementation 'com.allenliu.versionchecklib:library:2.2.0'
 }
 
 greendao {
