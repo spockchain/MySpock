@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.spockchain.wallet.R;
+import com.spockchain.wallet.utils.VersionChecker;
 import com.spockchain.wallet.view.AddWalletView;
 
 /**
@@ -22,6 +23,8 @@ public class GuideActivity extends AppCompatActivity  implements
         View.OnClickListener,
         AddWalletView.OnNewWalletClickListener,
         AddWalletView.OnImportWalletClickListener  {
+
+    private final VersionChecker versionChecker = new VersionChecker(this);
 
     private FrameLayout frameLayout;
 
@@ -43,6 +46,13 @@ public class GuideActivity extends AppCompatActivity  implements
         addWalletView.setOnImportWalletClickListener(this);
         frameLayout.addView(addWalletView);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        versionChecker.checkVersionIfNeeded();
     }
 
     @Override
