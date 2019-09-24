@@ -9,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.allenliu.versionchecklib.v2.AllenVersionChecker;
 import com.spockchain.wallet.R;
 import com.spockchain.wallet.base.BaseActivity;
 import com.spockchain.wallet.ui.adapter.HomePagerAdapter;
 import com.spockchain.wallet.ui.fragment.MineFragment;
 import com.spockchain.wallet.ui.fragment.PropertyFragment;
 import com.spockchain.wallet.utils.ToastUtils;
+import com.spockchain.wallet.utils.VersionChecker;
 import com.spockchain.wallet.view.NoScrollViewPager;
 
 import java.util.ArrayList;
@@ -47,7 +49,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.lly_mine)
     LinearLayout llyMine;
 
+    private final VersionChecker versionChecker = new VersionChecker(this);
+
     private HomePagerAdapter homePagerAdapter;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        // Check new version.
+        versionChecker.checkVersionIfNeeded();
+    }
 
     @Override
     public int getLayoutId() {

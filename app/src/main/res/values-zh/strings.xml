@@ -43,6 +43,11 @@
     <string name="mine_github">GitHub</string>
     <string name="mine_about_us">关于我们</string>
     <string name="mine_version">版本号：</string>
+    <string name="mine_check_update">检查版本更新</string>
+    <string name="mine_check_update_loading_text">检查中</string>
+    <string name="mine_check_update_no_update_dialog_title">检查版本更新</string>
+    <string name="mine_check_update_no_update_dialog_content">当前已是最新版本</string>
+    <string name="mine_check_update_no_update_dialog_button">知道了</string>
 
     <string name="add_new_property_title">添加新资产</string>
     <string name="search_toolbar_cancel">取消</string>
@@ -282,4 +287,7 @@
     <string name="transaction_list_to">接受: %s</string>
     <string name="transaction_list_time">时间: %s</string>
     <string name="transaction_list_Amount">数额: %s</string>
+
+    <string name="version_check_title">检测到有新版本</string>
+    <string name="version_check_context">版本号: %s\n\n%s</string>
 </resources>
