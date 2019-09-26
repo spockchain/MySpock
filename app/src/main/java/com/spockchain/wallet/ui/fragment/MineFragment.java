@@ -86,12 +86,12 @@ public class MineFragment extends BaseFragment {
                 versionChecker.checkNewVersion((boolean hasNewUpdate) -> {
                     loadingDialog.dismiss();
                     if (!hasNewUpdate) {
-                        AlertDialog noUpdateDilaog = new AlertDialog.Builder(this.getContext())
+                        AlertDialog noUpdateDialog = new AlertDialog.Builder(this.getContext())
                                 .setTitle(R.string.mine_check_update_no_update_dialog_title)
                                 .setMessage(R.string.mine_check_update_no_update_dialog_content)
                                 .setPositiveButton(R.string.mine_check_update_no_update_dialog_button, null)
                                 .create();
-                        noUpdateDilaog.show();
+                        noUpdateDialog.show();
                     }
                 });
                 break;
