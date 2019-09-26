@@ -55,7 +55,7 @@ public class MineFragment extends BaseFragment {
         }
     }
 
-    @OnClick({R.id.github_website, R.id.lly_check_update})
+    @OnClick({R.id.github_website, R.id.lly_check_update, R.id.lly_wallet_manage})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
