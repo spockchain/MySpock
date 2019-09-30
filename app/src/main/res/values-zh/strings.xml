@@ -6,6 +6,7 @@
     <string name="exit_tips">再按一次退出程序</string>
 
     <string name="homepage_tab_text_mall">钱包</string>
+    <string name="homepage_tab_text_explorer">浏览器</string>
     <string name="homepage_tab_text_mine">我</string>
     <string name="mine_title">我</string>
     <string name="property_drawer_qrcode_scanner">扫一扫</string>

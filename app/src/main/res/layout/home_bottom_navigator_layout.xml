@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3.5dp"
             android:gravity="center"
-            android:text="浏览器"
+            android:text="@string/homepage_tab_text_explorer"
             android:textColor="@drawable/home_bottom_tab_text_color_selector"
             android:textSize="12sp" />
     </LinearLayout>

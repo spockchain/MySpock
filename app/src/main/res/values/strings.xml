@@ -7,6 +7,7 @@
     <string name="exit_tips">Press Back button one more time to exit the app</string>
 
     <string name="homepage_tab_text_mall">Wallet</string>
+    <string name="homepage_tab_text_explorer">Explorer</string>
     <string name="homepage_tab_text_mine">Mine</string>
     <string name="mine_title">Mine</string>
     <string name="property_drawer_qrcode_scanner">Scan QR Code</string>
