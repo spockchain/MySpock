@@ -1,5 +1,6 @@
 package com.spockchain.wallet.ui.fragment;
 
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.webkit.WebView;
 import android.widget.TextView;
 
@@ -10,6 +11,8 @@ import butterknife.BindView;
 
 public class ExplorerFragment extends BaseFragment {
 
+    @BindView(R.id.swipeRefresh)
+    SwipeRefreshLayout swipeRefreshLayout;
     @BindView(R.id.wv_explorer)
     WebView wvExplorer;
 
@@ -30,6 +33,8 @@ public class ExplorerFragment extends BaseFragment {
 
     @Override
     public void configViews() {
+        swipeRefreshLayout.setOnRefreshListener(this::onRefresh);
+
         wvExplorer.getSettings().setJavaScriptEnabled(true);
     }
 
@@ -39,5 +44,10 @@ public class ExplorerFragment extends BaseFragment {
             return true;
         }
         return false;
+    }
+
+    private void onRefresh() {
+        wvExplorer.reload();
+        swipeRefreshLayout.setRefreshing(false);
     }
 }
