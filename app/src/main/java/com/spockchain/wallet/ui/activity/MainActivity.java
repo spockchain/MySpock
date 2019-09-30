@@ -157,6 +157,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void setAllUnselected() {
         ivMall.setSelected(false);
         tvMall.setSelected(false);
+
+        ivExplorer.setSelected(false);
+        tvExplorer.setSelected(false);
+
+
         ivMine.setSelected(false);
         tvMine.setSelected(false);
     }

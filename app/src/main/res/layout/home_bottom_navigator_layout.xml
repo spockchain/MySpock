@@ -44,7 +44,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginTop="5dp"
-            android:tint="@color/common_touch_bg"
+            android:tint="@drawable/home_bottom_tab_text_color_selector"
             android:src="@drawable/baseline_explore_white_18" />
 
         <TextView
