@@ -9,6 +9,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -57,16 +58,13 @@ public class PropertyDetailActivity extends BaseActivity {
     SwipeRefreshLayout refreshLayout;
 
     @BindView(R.id.tv_title)
-    TextView tvTitle;
+    Toolbar tvTitle;
+
+    @BindView(R.id.tv_wallet_address)
+    TextView txWalletAddress;
 
     @BindView(R.id.tv_amount)
     TextView tvAmount;
-
-    @BindView(R.id.btn_load_more)
-    Button btnLoadMore;
-
-    @BindView(R.id.lly_load_more)
-    View llyLoadMore;
 
     List<TransactionMetadata> transactionLists;
 
@@ -74,7 +72,7 @@ public class PropertyDetailActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        setSupportActionBar(tvTitle);
     }
 
     @Override
@@ -98,8 +96,8 @@ public class PropertyDetailActivity extends BaseActivity {
         symbol = intent.getStringExtra(C.EXTRA_SYMBOL);
         symbol = symbol == null ? C.SPOCK_SYMBOL: symbol;
 
-        tvTitle.setText(symbol);
-
+        tvTitle.setTitle(symbol);
+        txWalletAddress.setText(currWallet);
         tvAmount.setText(balance);
 
         transactionsViewModelFactory = new TransactionsViewModelFactory();
@@ -128,6 +126,10 @@ public class PropertyDetailActivity extends BaseActivity {
 
     private void onTransactions(List<TransactionMetadata> transactions) {
         LogUtils.d("onTransactions", "size: " + transactions.size());
+        if (transactionLists != null && transactions.size() == transactionLists.size()){
+            adapter.loadMoreEnd();
+            return;
+        }
         transactionLists = transactions;
         adapter.addTransactions(transactionLists, currWallet, symbol);
     }
@@ -136,20 +138,23 @@ public class PropertyDetailActivity extends BaseActivity {
     public void configViews() {
         ImmersionBar.with(this)
                 .transparentStatusBar()
-                .statusBarDarkFont(true, 1f)
+                .statusBarDarkFont(false, 1f)
                 .init();
 
-        refreshLayout = (SwipeRefreshLayout) findViewById(R.id.refresh_layout);
-        RecyclerView list = (RecyclerView) findViewById(R.id.list);
+        refreshLayout = findViewById(R.id.refresh_layout);
+        RecyclerView list = findViewById(R.id.list);
 
         list.setLayoutManager(new LinearLayoutManager(this));
 
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,1);
-        list.addItemDecoration(dividerItemDecoration);
+//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,1);
+//        list.addItemDecoration(dividerItemDecoration);
 
         adapter = new TransactionsAdapter(R.layout.list_item_transaction, null );
         list.setAdapter(adapter);
 
+        adapter.setOnLoadMoreListener(() -> {
+            viewModel.fetchNextPageTransactions();
+        }, list);
         adapter.setOnItemClickListener((BaseQuickAdapter adapter, View view, int position) -> {
             TransactionMetadata t = transactionLists.get(position);
 
@@ -158,11 +163,13 @@ public class PropertyDetailActivity extends BaseActivity {
             startActivity(intent);
         });
 
-        refreshLayout.setOnRefreshListener(viewModel::fetchTransactions);
+        refreshLayout.setOnRefreshListener(() -> {
+            viewModel.resetPage();
+            adapter.loadMoreEnd(true);
+            viewModel.fetchTransactions();
+        });
         // TODO(satoshi.meow): Enable the refresh after we support fetching transaction.
 //        refreshLayout.setEnabled(false);
-
-        viewModel.getHasMoreTransactions().observe(this, this::hasMoreTransactions);
     }
 
 
@@ -173,23 +180,14 @@ public class PropertyDetailActivity extends BaseActivity {
 
         if (!inProgress) {
             refreshLayout.setRefreshing(false);
+            adapter.loadMoreComplete();
         }
-
-        setLoadMoreButtonVisibility();
     }
 
-    private void hasMoreTransactions(boolean hasMore) {
-        setLoadMoreButtonVisibility();
-    }
-
-
-    @OnClick({R.id.lly_back, R.id.lly_transfer, R.id.lly_gathering, R.id.btn_load_more})
+    @OnClick({R.id.lly_transfer, R.id.lly_gathering})
     public void onClick(View view) {
         Intent intent = null;
         switch (view.getId()) {
-            case R.id.lly_back:
-                finish();
-                break;
             case R.id.lly_transfer:
 
                 intent = new Intent(mContext, SendActivity.class);
@@ -213,16 +211,9 @@ public class PropertyDetailActivity extends BaseActivity {
 
                 startActivity(intent);
                 break;
-            case R.id.btn_load_more:
-                viewModel.fetchNextPageTransactions();
-                break;
+//            case R.id.btn_load_more:
+//                viewModel.fetchNextPageTransactions();
+//                break;
         }
-    }
-
-    void setLoadMoreButtonVisibility() {
-        boolean isInProgress = viewModel.progress().getValue() == null ? false : viewModel.progress().getValue();
-        boolean hasMoreData = viewModel.getHasMoreTransactions().getValue() == null ? false : viewModel.getHasMoreTransactions().getValue();
-
-        llyLoadMore.setVisibility(!isInProgress && hasMoreData ? View.VISIBLE : View.GONE);
     }
 }

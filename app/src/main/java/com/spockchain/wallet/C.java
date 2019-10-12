@@ -29,7 +29,7 @@ public abstract class C {
     public static final String ETH_SYMBOL = "ETH";
     public static final String POA_SYMBOL = "POA";
     public static final String ETC_SYMBOL = "ETC";
-    public static final String SPOCK_SYMBOL = "SPOCK";
+    public static final String SPOCK_SYMBOL = "SPOK";
 
     public static final String SPOCK_UNIT = "Spok";
 

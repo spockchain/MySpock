@@ -21,6 +21,7 @@
     </style>
 
 
+
     <!-- 自定义loading dialog -->
     <style name="loading_dialog" parent="android:style/Theme.Dialog">
         <item name="android:windowFrame">@null</item>

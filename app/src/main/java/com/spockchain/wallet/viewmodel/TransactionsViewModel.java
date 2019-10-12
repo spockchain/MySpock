@@ -87,6 +87,10 @@ public class TransactionsViewModel extends BaseViewModel {
                 .subscribe(this::onDefaultNetwork, this::onError);
     }
 
+    public void resetPage(){
+        pageIndex = 0;
+    }
+
     public void fetchTransactions() {
         progress.postValue(true);
 
@@ -143,11 +147,14 @@ public class TransactionsViewModel extends BaseViewModel {
         progress.postValue(false);
         hasMoreTransactions.postValue(transactions.length >= TRANSACTIONS_PER_PAGE);
 
-        List<TransactionMetadata> currentList = this.transactions.getValue();
-        if (currentList == null) {
-            currentList = new ArrayList<>();
+        List<TransactionMetadata> currentList = new ArrayList<>();
+
+        if (this.transactions.getValue() != null){
+            currentList.addAll(this.transactions.getValue());
         }
+
         currentList.addAll(Arrays.asList(transactions));
+
         this.transactions.postValue(currentList);
 
 //        // ETH transfer ignores the contract call

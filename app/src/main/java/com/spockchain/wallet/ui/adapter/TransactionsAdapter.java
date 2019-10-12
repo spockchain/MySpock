@@ -1,5 +1,6 @@
 package com.spockchain.wallet.ui.adapter;
 
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.text.format.DateUtils;
@@ -49,9 +50,17 @@ public class TransactionsAdapter  extends BaseQuickAdapter<TransactionMetadata, 
         boolean isSent = transaction.getFrom().toLowerCase().equals(defaultAddress.toLowerCase());
 //        boolean isCreateContract = TextUtils.isEmpty(transaction.getTo());
 
-        helper.setText(R.id.from,  mContext.getString(R.string.transaction_list_from, transaction.getFrom()));
-        helper.setText(R.id.to, mContext.getString(R.string.transaction_list_to, transaction.getTo()));
-        helper.setText(R.id.created, mContext.getString(R.string.transaction_list_time, convertTimestampToDate(transaction.getTimestamp())));
+        //helper.setText(R.id.from,  mContext.getString(R.string.transaction_list_from, transaction.getFrom()));
+        if (isSent){
+            helper.setImageResource(R.id.type_icon, R.drawable.ic_tx_out);
+            helper.setBackgroundRes(R.id.type_icon, R.drawable.ic_tx_out_circular);
+            helper.setText(R.id.to,  transaction.getTo().substring(0,12) + "..." + transaction.getTo().substring(39));
+        } else {
+            helper.setImageResource(R.id.type_icon, R.drawable.ic_tx_in);
+            helper.setText(R.id.to,  transaction.getFrom().substring(0,12) + "..." + transaction.getFrom().substring(39));
+            helper.setBackgroundRes(R.id.type_icon, R.drawable.ic_tx_in_circular);
+        }
+        helper.setText(R.id.created, convertTimestampToDate(transaction.getTimestamp()));
 
 //        if (isSent) {
 //            if (isCreateContract) {
@@ -78,7 +87,7 @@ public class TransactionsAdapter  extends BaseQuickAdapter<TransactionMetadata, 
 //        }
 
 
-        helper.setTextColor(R.id.value, ContextCompat.getColor(mContext, isSent ? R.color.red : R.color.green));
+        //helper.setTextColor(R.id.value, ContextCompat.getColor(mContext, isSent ? R.color.red : R.color.green));
 
         String valueStr = "";
 
@@ -108,7 +117,7 @@ public class TransactionsAdapter  extends BaseQuickAdapter<TransactionMetadata, 
                 valueStr = (isSent ? "-" : "+") +  getScaledValue(valueStr, operation.contract.decimals) + " " + unit;
             }
         }
-        helper.setText(R.id.value, mContext.getString(R.string.transaction_list_Amount, valueStr));
+        helper.setText(R.id.value, valueStr);
     }
 
 

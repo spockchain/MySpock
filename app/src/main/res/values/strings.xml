@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">MySpock</string>
 
-    <string name="token_name">Spock</string>
+    <string name="token_name">SPOK</string>
 
     <string name="exit_tips">Press Back button one more time to exit the app</string>
 
@@ -284,10 +284,10 @@
     <string name="welcome_erc20_label_description">Support All ERC20 Tokens</string>
 
     <!--Transaction List-->
-    <string name="transaction_list_from">From: %s</string>
-    <string name="transaction_list_to">To: %s</string>
-    <string name="transaction_list_time">Time: %s</string>
-    <string name="transaction_list_Amount">Amount: %s</string>
+<!--    <string name="transaction_list_from">From: %s</string>-->
+<!--    <string name="transaction_list_to">%s</string>-->
+<!--    <string name="transaction_list_time">%s</string>-->
+<!--    <string name="transaction_list_Amount">Amount: %s</string>-->
 
     <string name="version_check_title">New Version is Available</string>
     <string name="version_check_context">New version: %s\n\n%s</string>

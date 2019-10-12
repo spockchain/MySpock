@@ -18,7 +18,7 @@ import io.reactivex.Observable;
 
 public class TransactionRepository implements TransactionRepositoryType {
 
-    public static final int TRANSACTIONS_PER_PAGE = 50;
+    public static final int TRANSACTIONS_PER_PAGE = 10;
 
     private final EthereumNetworkRepository networkRepository;
     private final TransactionLocalSource transactionLocalSource;
@@ -65,7 +65,8 @@ public class TransactionRepository implements TransactionRepositoryType {
     public Observable<TransactionMetadata[]> fetchTransactions(String walletAddr, int pageIndex) {
         FetchTransactionsRequestBody body = new FetchTransactionsRequestBody()
                 .withAddr(walletAddr)
-                .withLength(TRANSACTIONS_PER_PAGE);
+                .withLength(TRANSACTIONS_PER_PAGE)
+                .withStart(TRANSACTIONS_PER_PAGE * pageIndex);
         return blockExplorerClient.fetchTransactions(body);
     }
 

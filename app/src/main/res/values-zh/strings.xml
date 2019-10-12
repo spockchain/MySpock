@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MySpock</string>
 
-    <string name="token_name">Spock</string>
+    <string name="token_name">SPOK</string>
 
     <string name="exit_tips">再按一次退出程序</string>
 
@@ -284,10 +284,10 @@
 
 
     <!--Transaction List-->
-    <string name="transaction_list_from">发送: %s</string>
-    <string name="transaction_list_to">接受: %s</string>
-    <string name="transaction_list_time">时间: %s</string>
-    <string name="transaction_list_Amount">数额: %s</string>
+<!--    <string name="transaction_list_from">发送: %s</string>-->
+<!--    <string name="transaction_list_to">接受: %s</string>-->
+<!--    <string name="transaction_list_time">时间: %s</string>-->
+<!--    <string name="transaction_list_Amount">数额: %s</string>-->
 
     <string name="version_check_title">检测到有新版本</string>
     <string name="version_check_context">版本号: %s\n\n%s</string>

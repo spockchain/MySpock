@@ -30,7 +30,7 @@ public class RealmTokenSource implements TokenLocalSource {
                         .findAll();
                 int len = realmItems.size();
                 TokenInfo[] result = new TokenInfo[len + 1];
-                result[0] = new TokenInfo("", "Spock", "Spock", 18);
+                result[0] = new TokenInfo("", "Spock", "SPOK", 18);
 
                 for (int i = 0; i < len; i++) {
                     RealmTokenInfo realmItem = realmItems.get(i);
