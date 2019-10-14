@@ -7,5 +7,5 @@ import io.reactivex.Observable;
 
 public interface TickerService {
 
-    Observable<Ticker> fetchTickerPrice(String symbols, String currency);
+    Observable<Ticker> fetchTickerPrice(String market);
 }

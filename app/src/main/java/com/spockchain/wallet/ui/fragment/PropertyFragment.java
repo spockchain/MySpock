@@ -187,12 +187,10 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
         BigDecimal sum = new BigDecimal(0);
 
         for (Token token : tokenItems) {
-            if (token.tokenInfo.symbol.equals(ticker.symbol)) {
-                if (token.balance == null) {
-                    token.value = "0";
-                } else {
-                    token.value = BalanceUtils.ethToUsd(ticker.price, token.balance);
-                }
+            if (token.balance == null) {
+                token.value = "0";
+            } else {
+                token.value = BalanceUtils.ethToUsd(ticker.last, token.balance);
             }
             if (!TextUtils.isEmpty(token.value)) {
                 sum  = sum.add(new BigDecimal(token.value));

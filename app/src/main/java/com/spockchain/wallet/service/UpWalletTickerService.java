@@ -51,11 +51,11 @@ public class UpWalletTickerService implements TickerService {
     }
 
     @Override
-    public Observable<Ticker> fetchTickerPrice(String symbols, String currency) {
+    public Observable<Ticker> fetchTickerPrice(String market) {
         return apiClient
-                .fetchTickerPrice(symbols, currency)
+                .fetchTickerPrice(market)
                 .lift(apiError())
-                .map(r -> r.response[0])
+                .map(r -> r.data)
                 .subscribeOn(Schedulers.io());
     }
 
@@ -65,12 +65,12 @@ public class UpWalletTickerService implements TickerService {
     }
 
     public interface ApiClient {
-        @GET("prices?")
-        Observable<Response<TickerResponse>> fetchTickerPrice(@Query("symbols") String symbols, @Query("currency") String currency);
+        @GET("open/api/v1/data/ticker?")
+        Observable<Response<TickerResponse>> fetchTickerPrice(@Query("market") String market);
     }
 
     private static class TickerResponse {
-        Ticker[] response;
+        Ticker data;
     }
 
     private final static class ApiErrorOperator <T> implements ObservableOperator<T, Response<T>> {

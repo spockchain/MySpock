@@ -64,7 +64,16 @@
                 android:layout_height="wrap_content"
                 android:text="@string/property_approximate"
                 android:textColor="@color/property_ico_worth_color"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_marginEnd="@dimen/dp_4"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$"
+                android:textColor="@color/property_ico_worth_color"
+                android:textSize="12sp"
+                android:layout_marginEnd="@dimen/dp_4"/>
 
 
             <TextView

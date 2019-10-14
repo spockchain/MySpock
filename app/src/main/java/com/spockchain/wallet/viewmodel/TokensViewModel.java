@@ -109,7 +109,7 @@ public class TokensViewModel extends BaseViewModel {
 
     public Single<Ticker> getTicker(String symbol) {
         return Single.fromObservable(tickerService
-                .fetchTickerPrice(symbol, getCurrency()));   // getDefaultNetwork().symbol
+                .fetchTickerPrice(symbol + "_USDT"));   // getDefaultNetwork().symbol
     }
 
     public  String getCurrency() {
@@ -117,7 +117,7 @@ public class TokensViewModel extends BaseViewModel {
     }
 
     private  void onPrice(Ticker ticker) {
-        LogUtils.d("Tokens", "price: " + ticker.symbol + "  " + ticker.price);
+        LogUtils.d("Tokens", "price: " + ticker.last);
         this.prices.postValue(ticker);
     }
 
