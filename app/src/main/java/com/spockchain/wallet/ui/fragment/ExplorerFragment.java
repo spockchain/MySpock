@@ -28,7 +28,7 @@ public class ExplorerFragment extends BaseFragment {
 
     @Override
     public void initDatas() {
-        wvExplorer.loadUrl("http://www.spock.network/home");
+        wvExplorer.loadUrl("https://spock.network/home");
     }
 
     @Override
