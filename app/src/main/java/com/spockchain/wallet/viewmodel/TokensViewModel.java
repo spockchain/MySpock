@@ -102,6 +102,7 @@ public class TokensViewModel extends BaseViewModel {
         for (Token token : tokens ) {
             if (token.balance!=null && !token.balance.equals("0")) {   // > 0
                 getTicker(token.tokenInfo.symbol).subscribe(this::onPrice, this::onError);
+                break;
             }
         }
 

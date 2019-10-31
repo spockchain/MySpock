@@ -90,12 +90,10 @@ public class AddTokenActivity extends BaseActivity {
     public void initDatas() {
 
         // TODO 写死了几个热门的ERC20 （ 主网地址）
-        mItems.add(new TokenItem(new TokenInfo("", "ETH", "ETH", 18), true, R.drawable.wallet_logo_demo));
-        mItems.add(new TokenItem(new TokenInfo("0xB8c77482e45F1F44dE1745F52C74426C631bDD52", "", "BNB", 18), false, R.drawable.wallet_logo_demo));
-        mItems.add(new TokenItem(new TokenInfo("0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48", "USD Coin", "USDC", 6), false, R.drawable.wallet_logo_demo));
-        mItems.add(new TokenItem(new TokenInfo("0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2", "Maker", "MKR", 18), false, R.drawable.wallet_logo_demo));
-        mItems.add(new TokenItem(new TokenInfo("0xd850942ef8811f2a866692a623011bde52a462c1", "VeChain", "VEN", 18), false, R.drawable.wallet_logo_demo));
-        mItems.add(new TokenItem(new TokenInfo("0x0000000000085d4780B73119b644AE5ecd22b376", "TrueUSD", "TUSD", 18), false, R.drawable.wallet_logo_demo));
+        mItems.add(new TokenItem(new TokenInfo("", "Spock Network", "SPOK", 18), true, R.drawable.coin_icon));
+        mItems.add(new TokenItem(new TokenInfo("SPOCK-cff8efc2d1a091bbd177257ae8c682203349ca9c", "Rhea Chain", "REA", 18), false, R.drawable.coin_icon));
+        mItems.add(new TokenItem(new TokenInfo("SPOCK-12b0ee8fd39e80e9f659055a9ed4c8707b26a390", "Electronic Move Pay", "EMP", 18), false, R.drawable.coin_icon));
+        //mItems.add(new TokenItem(new TokenInfo("SPOCK-d249d232dc9d53d73f8c22dc25eeea3a4248bda1", "Electronic Move Pay", "EMP", 18), false, R.drawable.coin_icon));
 
 
         tokensViewModelFactory = new TokensViewModelFactory();

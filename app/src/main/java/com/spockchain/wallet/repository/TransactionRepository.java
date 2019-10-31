@@ -37,28 +37,13 @@ public class TransactionRepository implements TransactionRepositoryType {
     }
 
     @Override
-    public Observable<Transaction[]> fetchTransactions(String walletAddr, String tokenAddr) {
-        return Observable.create(e -> {
-            Transaction[] transactions;
-            if (TextUtils.isEmpty(tokenAddr)) {
-                transactions = transactionLocalSource.fetchTransaction(walletAddr).blockingGet();
-            } else {
-                transactions = transactionLocalSource.fetchTransaction(walletAddr, tokenAddr).blockingGet();
-            }
-
-            if (transactions != null && transactions.length > 0) {
-                e.onNext(transactions);
-            }
-            transactions = blockExplorerClient.fetchTransactions(walletAddr, tokenAddr).blockingFirst();
-            transactionLocalSource.clear();
-            if (TextUtils.isEmpty(tokenAddr)) {
-                transactionLocalSource.putTransactions(walletAddr, transactions);
-            } else {
-                transactionLocalSource.putTransactions(walletAddr, tokenAddr, transactions);
-            }
-            e.onNext(transactions);
-            e.onComplete();
-        });
+    public Observable<TransactionMetadata[]> fetchTransactions(String walletAddr, String tokenAddr,int pageIndex) {
+        FetchTransactionsRequestBody body = new FetchTransactionsRequestBody()
+                .withAddr(walletAddr)
+                .withContract(tokenAddr)
+                .withLength(TRANSACTIONS_PER_PAGE)
+                .withStart(TRANSACTIONS_PER_PAGE * pageIndex);
+        return blockExplorerClient.fetchTransactions(body);
     }
 
     @Override
@@ -82,6 +67,31 @@ public class TransactionRepository implements TransactionRepositoryType {
                     }
                     return null;
                 });
+    }
+
+    @Override
+    public Observable<Transaction[]> fetchTransactions(String walletAddr, String tokenAddr) {
+        return Observable.create(e -> {
+            Transaction[] transactions;
+            if (TextUtils.isEmpty(tokenAddr)) {
+                transactions = transactionLocalSource.fetchTransaction(walletAddr).blockingGet();
+            } else {
+                transactions = transactionLocalSource.fetchTransaction(walletAddr, tokenAddr).blockingGet();
+            }
+
+            if (transactions != null && transactions.length > 0) {
+                e.onNext(transactions);
+            }
+            transactions = blockExplorerClient.fetchTransactions(walletAddr, tokenAddr).blockingFirst();
+            transactionLocalSource.clear();
+            if (TextUtils.isEmpty(tokenAddr)) {
+                transactionLocalSource.putTransactions(walletAddr, transactions);
+            } else {
+                transactionLocalSource.putTransactions(walletAddr, tokenAddr, transactions);
+            }
+            e.onNext(transactions);
+            e.onComplete();
+        });
     }
 
     @Override

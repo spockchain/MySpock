@@ -27,6 +27,7 @@ import com.spockchain.wallet.domain.ETHWallet;
 import com.spockchain.wallet.entity.Ticker;
 import com.spockchain.wallet.entity.Token;
 import com.spockchain.wallet.interact.FetchWalletInteract;
+import com.spockchain.wallet.ui.activity.AddTokenActivity;
 import com.spockchain.wallet.ui.activity.CreateWalletActivity;
 import com.spockchain.wallet.ui.activity.GatheringQRCodeActivity;
 import com.spockchain.wallet.ui.activity.ImportWalletActivity;
@@ -189,7 +190,7 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
         for (Token token : tokenItems) {
             if (token.balance == null) {
                 token.value = "0";
-            } else {
+            } else if (token.tokenInfo.address.equals("")){
                 token.value = BalanceUtils.ethToUsd(ticker.last, token.balance);
             }
             if (!TextUtils.isEmpty(token.value)) {
@@ -342,7 +343,7 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
         tvTolalAsset.setVisibility(View.INVISIBLE);
     }
 
-    @OnClick({R.id.lly_menu, R.id.lly_qrcode_scanner, R.id.lly_create_wallet, R.id.lly_import_wallet})
+    @OnClick({R.id.lly_menu,R.id.lly_add_tokens, R.id.lly_qrcode_scanner, R.id.lly_create_wallet, R.id.lly_import_wallet})
     public void onClick(View view) {
         Intent intent = null;
         ETHWallet wallet = null;
@@ -375,7 +376,11 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
                 intent.putExtra(EXTRA_ADDRESS, wallet.getAddress());
                 startActivity(intent);
                 break;
-
+            case R.id.lly_add_tokens: // 添加token
+                intent = new Intent(mContext, AddTokenActivity.class);
+                startActivityForResult(intent, CREATE_WALLET_REQUEST);
+                drawer.closeDrawer(Gravity.START);
+                break;
             case R.id.civ_wallet_logo:// 跳转钱包详情
                 intent = new Intent(mContext, WalletDetailActivity.class);
                 wallet = WalletDaoUtils.getCurrent();
@@ -397,11 +402,11 @@ public class PropertyFragment extends BaseFragment implements View.OnClickListen
 
     // 打开关闭DrawerLayout
     private void openOrCloseDrawerLayout() {
-        boolean drawerOpen = drawer.isDrawerOpen(Gravity.END);
+        boolean drawerOpen = drawer.isDrawerOpen(Gravity.START);
         if (drawerOpen) {
-            drawer.closeDrawer(Gravity.END);
+            drawer.closeDrawer(Gravity.START);
         } else {
-            drawer.openDrawer(Gravity.END);
+            drawer.openDrawer(Gravity.START);
         }
     }
 

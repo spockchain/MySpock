@@ -94,6 +94,12 @@ public class TransactionsViewModel extends BaseViewModel {
     public void fetchTransactions() {
         progress.postValue(true);
 
+        if (this.tokenAddr != null){
+            fetchTransactionsInteract
+                    .fetch(defaultWallet.getValue().address,this.tokenAddr, 0)
+                    .subscribe(this::onFirstPageTransactions, this::onError);
+            return;
+        }
         fetchTransactionsInteract
                 .fetch(defaultWallet.getValue().address, 0)
                 .subscribe(this::onFirstPageTransactions, this::onError);
@@ -109,6 +115,13 @@ public class TransactionsViewModel extends BaseViewModel {
 
     public void fetchNextPageTransactions() {
         progress.postValue(true);
+
+        if (this.tokenAddr != null){
+            fetchTransactionsInteract
+                    .fetch(defaultWallet.getValue().address,this.tokenAddr, 0)
+                    .subscribe(this::onFirstPageTransactions, this::onError);
+            return;
+        }
 
         fetchTransactionsInteract
                 .fetch(defaultWallet.getValue().address, ++pageIndex)

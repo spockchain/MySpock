@@ -27,7 +27,7 @@ public class EthereumNetworkRepository  {
 
     private final NetworkInfo[] NETWORKS = new NetworkInfo[] {
             new NetworkInfo(C.SPOCK_MAIN_NETWORK_NAME, "SPOCK",
-                    "http://39.105.230.38:9666",
+                    "http://node.spock.network:19666",
                     "https://spock.network/",
                     null,234234234, false),
             new NetworkInfo(C.SPOCK_TEST_NETWORK_NAME, "SPOCK",
@@ -41,18 +41,18 @@ public class EthereumNetworkRepository  {
     private final Set<OnNetworkChangeListener> onNetworkChangedListeners = new HashSet<>();
 
 
-    public static EthereumNetworkRepository init(SharedPreferenceRepository sp) {
-        if (sSelf == null) {
-            sSelf = new EthereumNetworkRepository(sp);
-        }
-        return sSelf;
-    }
+            public static EthereumNetworkRepository init(SharedPreferenceRepository sp) {
+                if (sSelf == null) {
+                    sSelf = new EthereumNetworkRepository(sp);
+                }
+                return sSelf;
+            }
 
     private EthereumNetworkRepository(SharedPreferenceRepository preferenceRepository) {
-        this.preferences = preferenceRepository;
-        defaultNetwork = getByName(preferences.getDefaultNetwork());
-        if (defaultNetwork == null) {
-            defaultNetwork = NETWORKS[0];
+                this.preferences = preferenceRepository;
+                defaultNetwork = getByName(preferences.getDefaultNetwork());
+                if (defaultNetwork == null) {
+                    defaultNetwork = NETWORKS[0];
         }
     }
 

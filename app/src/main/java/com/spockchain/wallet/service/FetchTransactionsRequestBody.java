@@ -14,6 +14,9 @@ public class FetchTransactionsRequestBody {
     @SerializedName("start")
     @Expose
     private Integer start;
+    @SerializedName("contract")
+    @Expose
+    private String contract;
 
     public String getAddr() {
         return addr;
@@ -54,4 +57,16 @@ public class FetchTransactionsRequestBody {
         return this;
     }
 
+    public String getContract() {
+        return contract;
+    }
+
+    public void setContract(String contractAddr) {
+        this.contract = contractAddr;
+    }
+
+    public FetchTransactionsRequestBody withContract(String contractAddr) {
+        this.contract = contractAddr;
+        return this;
+    }
 }

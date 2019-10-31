@@ -169,7 +169,7 @@ public class TokenRepository implements TokenRepositoryType {
 
 
     private BigDecimal getBalance(String walletAddress, TokenInfo tokenInfo) throws Exception {
-        org.web3j.abi.datatypes.Function function = balanceOf(walletAddress);
+        org.web3j.abi.datatypes.Function function = balanceOf("0x" + walletAddress.substring(6));
         String responseValue = callSmartContractFunction(function, tokenInfo.address, walletAddress);
 
         List<Type> response = FunctionReturnDecoder.decode(

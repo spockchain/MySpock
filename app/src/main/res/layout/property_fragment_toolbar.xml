@@ -18,35 +18,37 @@
             android:layout_height="match_parent"
             android:layout_alignParentBottom="true">
 
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="18dp"
+                android:id="@+id/lly_menu"
+                android:src="@drawable/ic_property_nav" />
+
             <TextView
                 android:id="@+id/tv_property_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
                 android:layout_marginStart="15dp"
+                android:layout_toEndOf="@id/lly_menu"
                 android:alpha="0"
                 android:text="总资产"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
-
-            <LinearLayout
-                android:id="@+id/lly_menu"
-                android:layout_width="45dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="2dp"
                 android:layout_centerVertical="true"
-                android:gravity="center">
-
-                <ImageView
-                    android:layout_width="15dp"
-                    android:layout_height="3dp"
-                    android:layout_marginBottom="2dp"
-                    android:src="@drawable/ic_property_more" />
-
-            </LinearLayout>
+                android:layout_marginStart="18dp"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/lly_add_tokens"
+                android:layout_marginEnd="18dp"
+                android:src="@drawable/ic_property_add_token" />
         </RelativeLayout>
     </android.support.v7.widget.Toolbar>
 </merge>

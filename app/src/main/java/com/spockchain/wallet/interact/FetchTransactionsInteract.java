@@ -23,6 +23,12 @@ public class FetchTransactionsInteract {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
+    public Observable<TransactionMetadata[]> fetch(String walletAddr,String tokenAddr, int pageIndex) {
+        return transactionRepository
+                .fetchTransactions(walletAddr,tokenAddr, pageIndex)
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
     public Maybe<Transaction> findTransaction(String transactionHash) {
         return transactionRepository
                 .findTransaction(transactionHash)

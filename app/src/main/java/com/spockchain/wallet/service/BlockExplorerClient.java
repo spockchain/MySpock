@@ -76,6 +76,21 @@ public class BlockExplorerClient implements BlockExplorerClientType {
 
 	@Override
 	public Observable<TransactionMetadata[]> fetchTransactions(FetchTransactionsRequestBody body) {
+		if (body.getContract() != null && !body.getContract().equals("")){
+			return transactionsApiClient
+					.fetchTokenTransfers(body)
+					.lift(apiError(gson))
+					.map(r -> {
+						TransactionMetadata[] transactions = new TransactionMetadata[r.getData().size()];
+						int index = 0;
+						for (List<String> t : r.getData()) {
+							transactions[index++] = new TransactionMetadata(body.getContract(), t);
+						}
+						return transactions;
+					})
+					.subscribeOn(Schedulers.io());
+		}
+
 		return transactionsApiClient
 				.fetchTransactions(body)
 				.lift(apiError(gson))
@@ -113,6 +128,9 @@ public class BlockExplorerClient implements BlockExplorerClientType {
 
 		@POST("addr")
 		Observable<Response<FetchTransactionsResponse>> fetchTransactions(@Body FetchTransactionsRequestBody body);
+
+		@POST("addressContract")
+		Observable<Response<FetchTransactionsResponse>> fetchTokenTransfers(@Body FetchTransactionsRequestBody body);
 	}
 
 	private final static class EtherScanResponse {

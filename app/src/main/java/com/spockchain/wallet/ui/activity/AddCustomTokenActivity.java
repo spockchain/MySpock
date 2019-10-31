@@ -136,7 +136,7 @@ public class AddCustomTokenActivity extends BaseActivity {
             isValid = false;
         }
 
-        if (!Address.isAddress(address)) {
+        if (!Address.isSpockAddress(address)) {
             addressLayout.setError(getString(R.string.error_invalid_address));
             isValid = false;
         }

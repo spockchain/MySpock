@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Contacts;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.app.AlertDialog;
@@ -39,6 +40,7 @@ import com.spockchain.wallet.viewmodel.ConfirmationViewModel;
 import com.spockchain.wallet.viewmodel.ConfirmationViewModelFactory;
 import com.tencent.stat.StatService;
 
+import org.web3j.tx.Contract;
 import org.web3j.utils.Convert;
 
 import java.math.BigDecimal;
@@ -159,7 +161,8 @@ public class SendActivity extends BaseActivity {
 
         decimals = intent.getIntExtra(C.EXTRA_DECIMALS, C.ETHER_DECIMALS);
         symbol = intent.getStringExtra(C.EXTRA_SYMBOL);
-        symbol = symbol == null ? C.SPOCK_SYMBOL : symbol;
+        sendingTokens = symbol != null;
+        symbol = sendingTokens ? symbol : C.SPOCK_SYMBOL;
 
         tvTitle.setText(symbol + " " + getString(R.string.transfer_title));
 
@@ -326,6 +329,11 @@ public class SendActivity extends BaseActivity {
 
 
     private void onGasSettings(GasSettings gasSettings) {
+        if (sendingTokens){
+            gasPriceInWei = Contract.GAS_PRICE;
+            gasLimit = Contract.GAS_LIMIT;
+            return;
+        }
         gasPriceInWei = gasSettings.gasPrice;
         gasLimit = gasSettings.gasLimit;
 
@@ -363,7 +371,7 @@ public class SendActivity extends BaseActivity {
                 if (verifyInfo(toAddr, amount)) {
                     BottomSheetDialog dialog = new BottomSheetDialog(this, R.style.BottomSheetDialog);
 
-                    String amountForDisplay = String.format("-%s %s", amount, C.SPOCK_UNIT);
+                    String amountForDisplay = String.format("-%s %s", amount, symbol);
                     ConfirmTransactionView confirmView =
                             new ConfirmTransactionView(
                                     this,
@@ -385,8 +393,8 @@ public class SendActivity extends BaseActivity {
         InputPwdView pwdView = new InputPwdView(this, pwd -> {
             if (sendingTokens) {
                 viewModel.createTokenTransfer(pwd,
-                        etTransferAddress.getText().toString().trim(),
-                        contractAddress,
+                        "0x" + etTransferAddress.getText().toString().trim().substring(6),
+                        "0x" + contractAddress.substring(6),
                         BalanceUtils.tokenToWei(new BigDecimal(amountText.getText().toString().trim ()), decimals).toBigInteger(),
                         gasPriceInWei,
                         gasLimit
@@ -439,14 +447,17 @@ public class SendActivity extends BaseActivity {
     }
 
     private void onError(ErrorEnvelope error) {
-        AlertDialog dialog = new AlertDialog.Builder(this)
+        AlertDialog errorDialog = new AlertDialog.Builder(this)
                 .setTitle(R.string.error_transaction_failed)
                 .setMessage(getString(R.string.error_send_transaction_failed, error.message))
                 .setPositiveButton(R.string.button_ok, (dialog1, id) -> {
                     // Do nothing
                 })
                 .create();
-        dialog.show();
+        errorDialog.show();
+        if (dialog != null) {
+            dialog.hide();
+        }
     }
 
     private void onTransaction(String hash) {
